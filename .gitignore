@@ -1,0 +1,14 @@
+/bin/*
+!/bin/.gitkeep
+
+/log/*
+!/log/.gitkeep
+
+/ref/*
+!/ref/.gitkeep
+
+/src/*/.*
+/src/*/bin/
+
+/config4*.properties
+/flex_config_*.xml

@@ -1,0 +1,44 @@
+FLEX_HOME=
+#FLEX_HOME=D:/Adobe/Adobe Flash Builder 4.7 (64 Bit)/sdks/4.6.0
+
+config.locale=en_US
+config.player.version-major=12
+config.player.version-minor=0
+config.player.version=${config.player.version-major}.${config.player.version-minor}
+config.swf.version=23
+config.optimize=true
+config.incremental=true
+config.accessible=false
+config.wmode=direct
+config.debug=false
+config.debug.password=123456
+config.parallel=false
+config.maxthread=4
+
+config.sdk.type=adobe
+#config.sdk.type=apache
+config.flex_config.file=${basedir}/flex_config_${config.sdk.type}.xml
+
+config.dir.bin=${basedir}/bin
+config.dir.ext=${basedir}/ext
+config.dir.lib=${basedir}/lib
+config.dir.rsl=${basedir}/rsl
+config.dir.src=${basedir}/src
+config.dir.ref=${basedir}/ref
+config.dir.log=${basedir}/log
+
+config.dir.playerglobal=${config.dir.ext}/playerglobal/${config.player.version}
+config.dir.template=${config.dir.ext}/template
+
+config.library_project.prefix=lib
+config.project.prefix=
+
+config.select.default=
+
+#config.log.level=debug|error|info|verbose|warn
+config.log.level=info
+config.verbose=true
+
+jvmarg.compc=-Dfile.encoding=${file.encoding} -Xmx384m -Dsun.io.useCanonCaches=false
+jvmarg.mxmlc=-Dfile.encoding=${file.encoding} -Xmx384m -Dsun.io.useCanonCaches=false
+jvmarg.asdoc=-Dfile.encoding=${file.encoding} -Xmx1024m -Dsun.io.useCanonCaches=false

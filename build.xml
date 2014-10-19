@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ======================================================================
+	 Mar 10, 2014 3:54:12 P
+	 LinkWu
+	 ====================================================================== -->
+<project name="ocean" default="help" basedir=".">
+	<description>
+		Flex/AS3 project template
+	</description>
+
+	<import file="build_setup.xml" />
+	<import file="build_gen.xml" />
+
+	<target name="help" description="Show help message">
+	</target>
+
+	<target name="menu" description="Show menu">
+		<input message="Select the target..." validargs="clean,doc,help,build,wrap" addproperty="menu.target" defaultvalue="help" />
+		<antcall target="${menu.target}" />
+	</target>
+
+	<target name="doc" depends="setup" description="Doc all">
+		<asdoc output="${config.dir.ref}" package-description-file="${basedir}/package.xml" lenient="true" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="${config.incremental}" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" fork="true">
+			<load-config filename="${config.flex_config.file}" />
+
+			<doc-sources dir="${config.dir.src}">
+				<include name="**/src/**/*.as" />
+			</doc-sources>
+
+			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />
+
+			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
+
+			<jvmarg line="${jvmarg.asdoc}" />
+		</asdoc>
+	</target>
+
+	<target name="select" depends="setup" description="Build the selected">
+		<input message="Please enter project name, delimit them with a comma:" addproperty="projects.name" defaultvalue="${config.select.default}" />
+		<foreach target="build_one" list="${projects.name}" delimiter="," param="project.name" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
+	</target>
+
+	<target name="build" depends="setup" description="Build all">
+		<antcall target="build_all" />
+	</target>
+
+	<target name="build_all">
+		<foreach param="project.dir" target="build_one" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true">
+			<path>
+				<dirset dir="${config.dir.src}">
+					<depth max="0" min="0" />
+				</dirset>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="build_one">
+		<basename file="${project.dir}" property="project.name" />
+		<if>
+			<available filepath="${config.dir.src}" file="${project.name}" type="dir" />
+			<then>
+				<ant dir="${config.dir.src}/${project.name}" antfile="${project.name}.xml" target="build" output="${config.dir.log}/${project.name}.log" />
+			</then>
+			<else>
+				<echo>${config.dir.src}/${project.name} is not exist!!</echo>
+			</else>
+		</if>
+	</target>
+
+	<target name="wrap" depends="setup" description="Wrap all">
+		<antcall target="wrap_all" />
+	</target>
+
+	<target name="wrap_all">
+		<foreach param="project.dir" target="wrap_one" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true">
+			<path>
+				<dirset dir="${config.dir.src}">
+					<depth max="0" min="0" />
+				</dirset>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="wrap_one">
+		<basename file="${project.dir}" property="project.name" />
+		<if>
+			<and>
+				<available filepath="${config.dir.src}" file="${project.name}" type="dir" />
+				<not>
+					<available file="${config.dir.src}/${project.name}/.islibrary"/>
+				</not>
+			</and>
+			<then>
+				<ant dir="${config.dir.src}/${project.name}" antfile="${project.name}.xml" target="wrapper" output="${config.dir.log}/${project.name}.log" />
+			</then>
+			<else>
+				<echo>${config.dir.src}/${project.name} is not exist!!</echo>
+				<echo>${project.name} is not a runnable project!!</echo>
+			</else>
+		</if>
+	</target>	
+
+	<target name="clean" depends="setup" description="Clean all">
+		<antcall target="clean_bin" />
+		<antcall target="clean_log" />
+		<antcall target="clean_ref" />
+		<antcall target="clean_src_bin" />
+	</target>
+
+	<target name="clean_bin">
+		<delete includeemptydirs="true" verbose="true">
+			<fileset dir="${config.dir.bin}">
+				<exclude name=".gitkeep" />
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="clean_log">
+		<delete deleteonexit="true" includeemptydirs="true" verbose="true">
+			<fileset dir="${config.dir.log}">
+				<exclude name=".gitkeep" />
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="clean_ref">
+		<delete includeemptydirs="true" verbose="true">
+			<fileset dir="${config.dir.ref}">
+				<exclude name=".gitkeep" />
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="clean_src_bin">
+		<delete includeemptydirs="true" verbose="true">
+			<fileset dir="${config.dir.src}">
+				<include name="**/bin/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="clean_setting" depends="setup" description="Clean all">
+		<delete includeemptydirs="true" verbose="true">
+			<fileset dir="${config.dir.src}">
+				<exclude name=".gitkeep" />
+				<exclude name="**/.islibrary" />
+				<include name="**/.*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="drop" depends="setup" description="Drop build config">
+		<delete deleteonexit="true">
+			<fileset dir="${basedir}">
+				<include name="config4*.properties" />
+				<include name="flex_config_*.xml" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="swc" depends="setup" description="New a library project">
+		<input message="Please enter a name for the library project :" addproperty="library.name" />
+		<if>
+			<equals arg1="${library.name}" arg2="" />
+			<then>
+				<fail>
+You have to enter a name
+				</fail>
+			</then>
+		</if>
+
+		<if>
+			<available file="${config.dir.src}/${library.name}" type="dir" />
+			<then>
+				<fail>
+The project "${library.name}" is exist!!
+				</fail>
+			</then>
+		</if>
+
+		<antcall target="auto_gen_library_project">
+			<param name="library.name" value="${library.name}" />
+		</antcall>
+	</target>
+
+	<target name="swf" depends="setup" description="New a project">
+		<input message="Please enter a name for the project :" addproperty="project.name" />
+		<if>
+			<equals arg1="${project.name}" arg2="" />
+			<then>
+				<fail>
+You have to enter a name
+				</fail>
+			</then>
+		</if>
+
+		<if>
+			<available file="${config.dir.src}/${project.name}" type="dir" />
+			<then>
+				<fail>
+The project "${project.name}" is exist!!
+				</fail>
+			</then>
+		</if>
+
+		<antcall target="auto_gen_project">
+			<param name="project.name" value="${project.name}" />
+		</antcall>
+	</target>
+
+	<target name="setting" depends="setup" description="Gen all setting">
+		<foreach param="project.dir" target="auto_gen_setting" parallel="false" maxthreads="4" inheritall="true">
+			<path>
+				<dirset dir="${config.dir.src}">
+					<depth max="0" min="0" />
+				</dirset>
+			</path>
+		</foreach>
+	</target>
+</project>

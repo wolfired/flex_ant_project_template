@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<target name="setup">
+		<path id="ant.contrib.classpath">
+			<fileset dir="${basedir}/ext/ant_contrib">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="ant.contrib.classpath" />
+
+		<path id="ant.flex.classpath">
+			<fileset dir="${basedir}/ext/ant_flex">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<taskdef resource="flexTasks.tasks" classpathref="ant.flex.classpath" />
+
+		<if>
+			<or>
+				<not>
+					<available file="config4user.properties" />
+				</not>
+				<uptodate targetfile="config.properties.base" srcfile="config4user.properties" />
+			</or>
+			<then>
+				<copy file="config.properties.base" tofile="config4user.properties" />
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<not>
+					<available file="config4ant.properties" />
+				</not>
+				<uptodate targetfile="config4user.properties" srcfile="config4ant.properties" />
+			</or>
+			<then>
+				<exec executable="native2ascii">
+					<arg line="-encoding UTF-8 config4user.properties config4ant.properties" />
+				</exec>
+			</then>
+		</if>
+
+		<property file="config4ant.properties" />
+
+		<if>
+			<or>
+				<equals arg1="${FLEX_HOME}" arg2="" />
+			</or>
+			<then>
+				<fail>
+You need to edit the config4user.properties:
+
+	FLEX_HOME=${FLEX_HOME}
+
+then ant again!!
+				</fail>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${config.dir.playerglobal}" type="dir"/>
+			</not>
+			<then>
+				<fail>
+${config.dir.playerglobal} do not exist!!
+				</fail>
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<not>
+					<available file="${config.flex_config.file}" />
+				</not>
+				<uptodate targetfile="${config.flex_config.file}.base" srcfile="${config.flex_config.file}" />
+			</or>
+			<then>
+				<copy file="${config.flex_config.file}.base" tofile="${config.flex_config.file}" />
+			</then>
+		</if>
+
+		<record action="start" loglevel="${config.log.level}" append="no" name="${config.dir.log}/build.log" />
+	</target>
+</project>

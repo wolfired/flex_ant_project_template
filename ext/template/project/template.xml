@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="@@project_name@@" basedir=".">
+	<property name="dir.bin" value="${basedir}/bin" />
+	<property name="dir.lib" value="${basedir}/lib" />
+	<property name="dir.rsl" value="${basedir}/rsl" />
+	<property name="dir.src" value="${basedir}/src" />
+
+	<target name="pre_compile">
+		<!-- write special code -->
+	</target>
+
+	<import file="../../project.xml" />
+</project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<target name="compile" depends="pre_compile">
+		<mxmlc file="${dir.src}/${ant.project.name}.as" output="${dir.bin}/${ant.project.name}.swf" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="false" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="true" static-rsls="true" fork="true">
+			<load-config filename="${config.flex_config.file}" />
+
+			<source-path path-element="${dir.src}" />
+
+			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />	
+
+			<library-path dir="${dir.lib}" includes="**/*.swc" append="true" />
+			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<external-library-path dir="${dir.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
+
+			<jvmarg line="${jvmarg.mxmlc}" />
+		</mxmlc>
+	</target>
+
+	<target name="build" depends="compile">
+	</target>
+
+	<target name="wrapper">
+		<html-wrapper output="${dir.bin}" file="${ant.project.name}.html" swf="${ant.project.name}" width="826" height="462" bgcolor="#F0F0F0" history="false" express-install="true" version-detection="false" version-major="${config.player.version-major}" version-minor="${config.player.version-minor}" wmode="${config.wmode}" version-revision="0" />
+	</target>
+</project>

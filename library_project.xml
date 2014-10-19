@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<target name="compile" depends="pre_compile">
+		<compc output="${dir.bin}/${ant.project.name}.swc" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="${config.incremental}" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="${config.accessible}" fork="true">
+			<load-config filename="${config.flex_config.file}" />
+
+			<include-sources dir="${dir.src}" includes="**/*" />
+
+			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />
+
+			<library-path dir="${dir.lib}" includes="**/*.swc" append="true" />
+			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<external-library-path dir="${dir.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
+
+			<jvmarg line="${jvmarg.compc}" />
+		</compc>
+	</target>
+
+	<target name="build" depends="compile">
+	</target>
+</project>

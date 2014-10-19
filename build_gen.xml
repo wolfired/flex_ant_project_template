@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<target name="auto_gen_library_project">
+		<property name="project.dir" value="${config.dir.src}/${library.name}" />
+
+		<copy todir="${project.dir}" includeemptydirs="true">
+			<fileset dir="${config.dir.template}/library_project">
+				<include name="bin" />
+				<include name="lib" />
+				<include name="rsl" />
+				<include name="src" />
+				<include name=".islibrary" />
+				<include name="template.xml" />
+			</fileset>
+		</copy>
+
+		<move file="${project.dir}/template.xml" tofile="${project.dir}/${library.name}.xml" />
+		<replace file="${project.dir}/${library.name}.xml" token="@@project_name@@" value="${library.name}" />
+
+		<move todir="${project.dir}/src/${library.name}">
+			<fileset dir="${project.dir}/src">
+				<include name="**/*" />
+			</fileset>
+		</move>
+
+		<antcall target="auto_gen_library_setting">
+			<param name="project.dir" value="${project.dir}" />
+		</antcall>
+	</target>
+
+	<target name="auto_gen_project">
+		<property name="project.dir" value="${config.dir.src}/${project.name}" />
+
+		<copy todir="${project.dir}" includeemptydirs="true">
+			<fileset dir="${config.dir.template}/project">
+				<exclude name="src/.*" />
+				<include name="bin" />
+				<include name="lib" />
+				<include name="rsl" />
+				<include name="src" />
+				<include name="src/" />
+				<include name="template.xml" />
+			</fileset>
+		</copy>
+		<move file="${project.dir}/template.xml" tofile="${project.dir}/${project.name}.xml" />
+		<replace file="${project.dir}/${project.name}.xml" token="@@project_name@@" value="${project.name}" />
+
+		<move todir="${project.dir}/src/${project.name}">
+			<fileset dir="${project.dir}/src">
+				<exclude name="**/template.as" />
+				<include name="**/*" />
+			</fileset>
+		</move>
+		<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${project.name}.as" />
+		<replace file="${project.dir}/src/${project.name}.as" token="@@project_name@@" value="${project.name}" />
+
+		<antcall target="auto_gen_project_setting">
+			<param name="project.dir" value="${project.dir}" />
+		</antcall>
+	</target>
+
+	<target name="auto_gen_setting">
+		<if>
+			<available file="${project.dir}/.islibrary"/>
+			<then>
+				<antcall target="auto_gen_library_setting">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
+			</then>
+			<else>
+				<antcall target="auto_gen_project_setting">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
+			</else>
+		</if>
+	</target>
+
+	<target name="auto_gen_library_setting">
+		<basename file="${project.dir}" property="project.name" />
+
+		<copy todir="${project.dir}">
+			<fileset dir="${config.dir.template}/library_project">
+				<include name=".settings/" />
+				<include name=".actionScriptProperties" />
+				<include name=".flexLibProperties" />
+				<include name=".project" />
+			</fileset>
+		</copy>
+
+		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.library_project.prefix}${project.name}" />
+
+		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${config.library_project.prefix}${project.name}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
+	</target>
+
+	<target name="auto_gen_project_setting">
+		<basename file="${project.dir}" property="project.name" />
+
+		<copy todir="${project.dir}">
+			<fileset dir="${config.dir.template}/project">
+				<include name=".settings/" />
+				<include name=".actionScriptProperties" />
+				<include name=".flexProperties" />
+				<include name=".project" />
+			</fileset>
+		</copy>
+
+		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.project.prefix}${project.name}" />
+
+		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${project.name}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
+	</target>
+</project>
