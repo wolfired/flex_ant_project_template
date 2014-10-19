@@ -8,6 +8,8 @@
 				<include name="bin" />
 				<include name="lib" />
 				<include name="rsl" />
+				<include name=".lib" />
+				<include name=".rsl" />
 				<include name="src" />
 				<include name=".islibrary" />
 				<include name="template.xml" />
@@ -37,6 +39,8 @@
 				<include name="bin" />
 				<include name="lib" />
 				<include name="rsl" />
+				<include name=".lib" />
+				<include name=".rsl" />
 				<include name="src" />
 				<include name="src/" />
 				<include name="template.xml" />
@@ -117,5 +121,10 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
+
+		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
+			<arg value="${project.dir}"/>
+			<arg value="${config.library_project.prefix}"/>
+		</java>		
 	</target>
 </project>

@@ -105,7 +105,7 @@
 		<antcall target="clean_bin" />
 		<antcall target="clean_log" />
 		<antcall target="clean_ref" />
-		<antcall target="clean_src_bin" />
+		<antcall target="clean_src" />
 	</target>
 
 	<target name="clean_bin">
@@ -135,20 +135,25 @@
 		</delete>
 	</target>
 
-	<target name="clean_src_bin">
+	<target name="clean_src">
 		<delete includeemptydirs="true" verbose="true">
 			<fileset dir="${config.dir.src}">
 				<include name="**/bin/*" />
+				<include name="**/.lib/*" />
+				<include name="**/.rsl/*" />
 			</fileset>
 		</delete>
 	</target>
 
-	<target name="clean_setting" description="Clean all">
+	<target name="clean_setting" depends="setup" description="Clean all">
 		<delete includeemptydirs="true" verbose="true">
 			<fileset dir="${config.dir.src}">
 				<exclude name=".gitkeep" />
+				<exclude name="**/.lib" />
+				<exclude name="**/.rsl" />
 				<exclude name="**/.islibrary" />
 				<include name="**/.*" />
+				<include name="**/.*/" />
 			</fileset>
 		</delete>
 	</target>
@@ -212,7 +217,7 @@ The project "${project.name}" is exist!!
 		</antcall>
 	</target>
 
-	<target name="setting" depends="setup" description="Gen all setting">
+	<target name="setting" depends="setup, clean_setting, build" description="Gen all setting">
 		<foreach param="project.dir" target="auto_gen_setting" parallel="false" maxthreads="4" inheritall="true">
 			<path>
 				<dirset dir="${config.dir.src}">

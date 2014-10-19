@@ -13,6 +13,7 @@
       <libraryPathEntry kind="1" linkType="1" path="lib"/>
       <libraryPathEntry kind="1" linkType="2" path="@@rsl@@"/>
       <libraryPathEntry kind="1" linkType="2" path="rsl"/>
+      @@lib_rsl@@
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

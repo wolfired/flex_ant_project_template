@@ -8,8 +8,10 @@
 
 			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />	
 
+			<library-path dir="${dot.lib}" includes="**/*.swc" append="true" />
 			<library-path dir="${dir.lib}" includes="**/*.swc" append="true" />
 			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<external-library-path dir="${dot.rsl}/" includes="**/*.swc" append="true" />
 			<external-library-path dir="${dir.rsl}/" includes="**/*.swc" append="true" />
 			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
 

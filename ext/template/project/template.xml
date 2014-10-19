@@ -5,6 +5,9 @@
 	<property name="dir.rsl" value="${basedir}/rsl" />
 	<property name="dir.src" value="${basedir}/src" />
 
+	<property name="dot.lib" value="${basedir}/.lib" />
+	<property name="dot.rsl" value="${basedir}/.rsl" />
+
 	<target name="pre_compile">
 		<!-- write special code -->
 	</target>
