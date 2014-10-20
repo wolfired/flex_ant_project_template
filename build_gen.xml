@@ -97,8 +97,14 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
+
+		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
+			<arg value="${project.dir}"/>
+			<arg value="${config.library_project.prefix}"/>
+		</java>
 	</target>
 
 	<target name="auto_gen_project_setting">
@@ -119,12 +125,13 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
 
 		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
 			<arg value="${project.dir}"/>
 			<arg value="${config.library_project.prefix}"/>
-		</java>		
+		</java>
 	</target>
 </project>

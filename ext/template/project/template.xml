@@ -10,6 +10,9 @@
 
 	<target name="pre_compile">
 		<!-- write special code -->
+		<!--
+			<copy file="" todir="" />
+		--->		
 	</target>
 
 	<import file="../../project.xml" />

@@ -240,7 +240,7 @@ The project "${project.name}" is exist!!
 		</if>
 	</target>
 
-	<target name="setting" depends="setup, pre_compile_all" description="Gen all setting">
+	<target name="setting" depends="setup, clean_setting, pre_compile_all" description="Gen all setting">
 		<foreach param="project.dir" target="auto_gen_setting" parallel="false" maxthreads="4" inheritall="true">
 			<path>
 				<dirset dir="${config.dir.src}">
