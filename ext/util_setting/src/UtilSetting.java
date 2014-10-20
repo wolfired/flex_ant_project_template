@@ -1,48 +1,68 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.CharBuffer;
 
 
 public class UtilSetting {
+	private static final String LIB_SRT = "<libraryPathEntry kind=\"3\" linkType=\"1\" path=\"/@@target_name@@/bin/@@target_name@@.swc\" useDefaultLinkType=\"false\"/>";
+	private static final String RSL_STR = "<libraryPathEntry kind=\"3\" linkType=\"2\" path=\"/@@target_name@@/bin/@@target_name@@.swc\" useDefaultLinkType=\"false\"/>";
+	
+	public String readContent(String fileName) throws Exception{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		CharBuffer cb = CharBuffer.allocate(4096);
+		br.read(cb);
+		br.close();
+		
+		String result = cb.flip().toString();
+		cb.clear();
+		return result;
+	}
+	
+	public void writeContent(String fileName, String content) throws Exception{
+		BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+		bw.write(content);
+		bw.close();
+	}
+	
 
 	/**
 	 * @param args
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
+		UtilSetting us = new UtilSetting();
+		
 		String path = args[0];
 		String prefix = args[1];
 		
-		CharBuffer lib_rsl_cb = CharBuffer.allocate(4096);
-		CharBuffer setting_cb = CharBuffer.allocate(4096);
+		CharBuffer buffer = CharBuffer.allocate(4096);
 		
-		String lib_str = "<libraryPathEntry kind=\"3\" linkType=\"1\" path=\"/@@lib_name@@/bin/@@lib_name@@.swc\" useDefaultLinkType=\"false\"/>";
-		File lib_dir = new File(path + "/.lib");
-		String[] lib_list = lib_dir.list();
-		for (int i = 0; i < lib_list.length; ++i) {
-			lib_rsl_cb.put(lib_str.replaceAll("@@lib_name@@", prefix + lib_list[i].split("\\.")[0]));
+		String content;
+		String[] array;
+		
+		content = us.readContent(path + "/.dependlib");
+		array = content.split(",");
+		for (String str : array) {
+			if(null != str && !"".equals(str.trim())){
+				buffer.put(LIB_SRT.replaceAll("@@target_name@@", prefix + str.trim()));
+			}
 		}
 		
-		String rsl_str = "<libraryPathEntry kind=\"3\" linkType=\"2\" path=\"/@@lib_name@@/bin/@@lib_name@@.swc\" useDefaultLinkType=\"false\"/>";
-		File rsl_dir = new File(path + "/.rsl");
-		String[] rsl_list = rsl_dir.list();
-		for (int i = 0; i < rsl_list.length; ++i) {
-			lib_rsl_cb.put(rsl_str.replaceAll("@@lib_name@@", prefix + rsl_list[i].split("\\.")[0]));
+		content = us.readContent(path + "/.dependrsl");
+		array = content.split(",");
+		for (String str : array) {
+			if(null != str && !"".equals(str.trim())){
+				buffer.put(RSL_STR.replaceAll("@@target_name@@", prefix + str.trim()));
+			}	
 		}
 		
-		BufferedReader br = new BufferedReader(new FileReader(path + "/.actionScriptProperties"));
-		br.read(setting_cb);
-		br.close();
+		String src_content = us.readContent(path + "/.actionScriptProperties");
+		String dst_content = src_content.replaceAll("@@lib_rsl@@", buffer.flip().toString());
+		us.writeContent(path + "/.actionScriptProperties", dst_content);
 		
-		BufferedWriter wr = new BufferedWriter(new FileWriter(path + "/.actionScriptProperties"));
-		wr.write(setting_cb.flip().toString().replaceAll("@@lib_rsl@@", lib_rsl_cb.flip().toString()));
-		wr.close();
-		
-		lib_rsl_cb.clear();
-		setting_cb.clear();
+		buffer.clear();
 	}
 
 }
