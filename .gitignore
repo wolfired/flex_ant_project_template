@@ -8,6 +8,8 @@
 !/ref/.gitkeep
 
 /src/*/.*
+!/src/*/.depend*
+!/src/*/.islibrary
 /src/*/bin/
 
 /config4*.properties

@@ -152,6 +152,8 @@
 				<exclude name="**/.lib" />
 				<exclude name="**/.rsl" />
 				<exclude name="**/.islibrary" />
+				<exclude name="**/.dependlib" />
+				<exclude name="**/.dependrsl" />
 				<include name="**/.*" />
 				<include name="**/.*/" />
 			</fileset>
@@ -217,30 +219,7 @@ The project "${project.name}" is exist!!
 		</antcall>
 	</target>
 
-	<target name="pre_compile_all">
-		<foreach param="project.dir" target="pre_compile_one" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true">
-			<path>
-				<dirset dir="${config.dir.src}">
-					<depth max="0" min="0" />
-				</dirset>
-			</path>
-		</foreach>
-	</target>
-	
-	<target name="pre_compile_one">
-		<basename file="${project.dir}" property="project.name" />
-		<if>
-			<available filepath="${config.dir.src}" file="${project.name}" type="dir" />
-			<then>
-				<ant dir="${config.dir.src}/${project.name}" antfile="${project.name}.xml" target="pre_compile" output="${config.dir.log}/${project.name}.log" />
-			</then>
-			<else>
-				<echo>${config.dir.src}/${project.name} is not exist!!</echo>
-			</else>
-		</if>
-	</target>
-
-	<target name="setting" depends="setup, clean_setting, pre_compile_all" description="Gen all setting">
+	<target name="setting" depends="setup, clean_setting" description="Gen all setting">
 		<foreach param="project.dir" target="auto_gen_setting" parallel="false" maxthreads="4" inheritall="true">
 			<path>
 				<dirset dir="${config.dir.src}">

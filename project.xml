@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-	<target name="compile" depends="pre_compile">
+	<target name="pre_custom">
+		<mkdir dir="${dir.lib}"/>
+		<mkdir dir="${dir.rsl}"/>
+		<mkdir dir="${dot.lib}"/>
+		<mkdir dir="${dot.rsl}"/>
+	</target>
+
+	<target name="pre_compile">
+		<if>
+			<isset property="depend.libs" />
+			<then>
+				<foreach target="copy_lib" list="${depend.libs}" delimiter="," param="depend.lib" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
+			</then>
+		</if>
+		
+		<if>
+			<isset property="depend.rsls" />
+			<then>
+				<foreach target="copy_rsl" list="${depend.rsls}" delimiter="," param="depend.rsl" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
+			</then>
+		</if>
+	</target>
+
+	<target name="compile" depends="pre_custom,custom,pre_compile">
 		<mxmlc file="${dir.src}/${ant.project.name}.as" output="${dir.bin}/${ant.project.name}.swf" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="false" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="true" static-rsls="true" fork="true">
 			<load-config filename="${config.flex_config.file}" />
 
@@ -24,5 +47,13 @@
 
 	<target name="wrapper">
 		<html-wrapper output="${dir.bin}" file="${ant.project.name}.html" swf="${ant.project.name}" width="826" height="462" bgcolor="#F0F0F0" history="false" express-install="true" version-detection="false" version-major="${config.player.version-major}" version-minor="${config.player.version-minor}" wmode="${config.wmode}" version-revision="0" />
+	</target>
+
+	<target name="copy_lib">
+		<copy file="${config.dir.src}/${depend.lib}/bin/${depend.lib}.swc" todir="${dot.lib}" />
+	</target>
+
+	<target name="copy_rsl">
+		<copy file="${config.dir.src}/${depend.rsl}/bin/${depend.rsl}.swc" todir="${dot.rsl}" />
 	</target>
 </project>

@@ -8,11 +8,11 @@
 	<property name="dot.lib" value="${basedir}/.lib" />
 	<property name="dot.rsl" value="${basedir}/.rsl" />	
 
-	<target name="pre_compile">
-		<!-- write special code -->
-		<!--
-			<copy file="" todir="" />
-		--->
+	<loadfile property="depend.libs" srcfile="${basedir}/.dependlib" quiet="true" />
+	<loadfile property="depend.rsls" srcfile="${basedir}/.dependrsl" quiet="true" />
+
+	<target name="custom">
+		<!-- write custom code -->
 	</target>
 
 	<import file="../../library_project.xml" />
