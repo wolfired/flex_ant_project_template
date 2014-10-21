@@ -1,6 +1,8 @@
 /bin/*
 !/bin/.gitkeep
 
+/ext/util_*/dst/
+
 /log/*
 !/log/.gitkeep
 
