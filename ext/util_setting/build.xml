@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="UtilSetting" basedir="." default="package">
+	<property name="dir.src" value="${basedir}/src" />
+	<property name="dir.dst" value="${basedir}/dst" />
+
+	<target name="init">
+		<mkdir dir="${dir.dst}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${dir.src}" destdir="${dir.dst}" includeantruntime="false" />
+	</target>
+
+	<target name="package" depends="compile">
+		<jar destfile="${basedir}/main.jar" basedir="${dir.dst}" includes="**/*.class">
+			<manifest>
+				<attribute name="Main-Class" value="${ant.project.name}" />
+			</manifest>
+		</jar>
+	</target>
+</project>

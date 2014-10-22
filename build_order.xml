@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".">
+	<import file="build_setup.xml" />
+
+	<target name="build_more" depends="setup">
+		<foreach target="build_one" list="${targets.name}" delimiter="," param="target.name" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
+	</target>
+
+	<target name="build_one">
+		<basename file="${target.dir}" property="target.name" />
+		<if>
+			<available filepath="${config.dir.src}" file="${target.name}" type="dir" />
+			<then>
+				<ant dir="${config.dir.src}/${target.name}" antfile="${target.name}.xml" target="build" output="${config.dir.log}/${target.name}.log" />
+			</then>
+			<else>
+				<echo>${config.dir.src}/${target.name} is not exist!!</echo>
+			</else>
+		</if>
+	</target>
+</project>

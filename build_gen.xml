@@ -1,70 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-	<target name="auto_gen_library_project">
-		<property name="project.dir" value="${config.dir.src}/${library.name}" />
+	<target name="auto_gen_library">
+		<if>
+			<and>
+				<not>
+					<equals arg1="${library.name}" arg2="" />
+				</not>
+				<not>
+					<available file="${config.dir.src}/${library.name}" type="dir" />
+				</not>
+			</and>
+			<then>
+				<property name="project.dir" value="${config.dir.src}/${library.name}" />
 
-		<copy todir="${project.dir}" includeemptydirs="true">
-			<fileset dir="${config.dir.template}/library_project">
-				<include name="bin" />
-				<include name="lib" />
-				<include name="rsl" />
-				<include name=".lib" />
-				<include name=".rsl" />
-				<include name="src" />
-				<include name=".islibrary" />
-				<include name=".dependlib" />
-				<include name=".dependrsl" />
-				<include name="template.xml" />
-			</fileset>
-		</copy>
+				<copy todir="${project.dir}" includeemptydirs="true">
+					<fileset dir="${config.dir.template}/library_project">
+						<include name="bin" />
+						<include name="lib" />
+						<include name="rsl" />
+						<include name=".lib" />
+						<include name=".rsl" />
+						<include name="src" />
+						<include name=".islibrary" />
+						<include name=".dependlib" />
+						<include name=".dependrsl" />
+						<include name="template.xml" />
+					</fileset>
+				</copy>
 
-		<move file="${project.dir}/template.xml" tofile="${project.dir}/${library.name}.xml" />
-		<replace file="${project.dir}/${library.name}.xml" token="@@project_name@@" value="${library.name}" />
+				<move file="${project.dir}/template.xml" tofile="${project.dir}/${library.name}.xml" />
+				<replace file="${project.dir}/${library.name}.xml" token="@@project_name@@" value="${library.name}" />
 
-		<move todir="${project.dir}/src/${library.name}">
-			<fileset dir="${project.dir}/src">
-				<include name="**/*" />
-			</fileset>
-		</move>
+				<move todir="${project.dir}/src/${library.name}">
+					<fileset dir="${project.dir}/src">
+						<include name="**/*" />
+					</fileset>
+				</move>
 
-		<antcall target="auto_gen_library_setting">
-			<param name="project.dir" value="${project.dir}" />
-		</antcall>
+				<antcall target="auto_gen_library_setting">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
+			</then>
+			<elseif>
+				<available file="${config.dir.src}/${library.name}" type="dir" />
+				<then>
+					<echo>The project "${library.name}" is exist!!</echo>
+				</then>
+			</elseif>
+			<else>
+				<echo>You have to enter a name</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="auto_gen_project">
-		<property name="project.dir" value="${config.dir.src}/${project.name}" />
+		<if>
+			<and>
+				<not>
+					<equals arg1="${project.name}" arg2="" />
+				</not>
+				<not>
+					<available file="${config.dir.src}/${project.name}" type="dir" />
+				</not>
+			</and>
+			<then>
+				<property name="project.dir" value="${config.dir.src}/${project.name}" />
 
-		<copy todir="${project.dir}" includeemptydirs="true">
-			<fileset dir="${config.dir.template}/project">
-				<exclude name="src/.*" />
-				<include name="bin" />
-				<include name="lib" />
-				<include name="rsl" />
-				<include name=".lib" />
-				<include name=".rsl" />
-				<include name="src" />
-				<include name="src/" />
-				<include name=".dependlib" />
-				<include name=".dependrsl" />
-				<include name="template.xml" />
-			</fileset>
-		</copy>
-		<move file="${project.dir}/template.xml" tofile="${project.dir}/${project.name}.xml" />
-		<replace file="${project.dir}/${project.name}.xml" token="@@project_name@@" value="${project.name}" />
+				<copy todir="${project.dir}" includeemptydirs="true">
+					<fileset dir="${config.dir.template}/project">
+						<exclude name="src/.*" />
+						<include name="bin" />
+						<include name="lib" />
+						<include name="rsl" />
+						<include name=".lib" />
+						<include name=".rsl" />
+						<include name="src" />
+						<include name="src/" />
+						<include name=".dependlib" />
+						<include name=".dependrsl" />
+						<include name="template.xml" />
+					</fileset>
+				</copy>
+				<move file="${project.dir}/template.xml" tofile="${project.dir}/${project.name}.xml" />
+				<replace file="${project.dir}/${project.name}.xml" token="@@project_name@@" value="${project.name}" />
 
-		<move todir="${project.dir}/src/${project.name}">
-			<fileset dir="${project.dir}/src">
-				<exclude name="**/template.as" />
-				<include name="**/*" />
-			</fileset>
-		</move>
-		<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${project.name}.as" />
-		<replace file="${project.dir}/src/${project.name}.as" token="@@project_name@@" value="${project.name}" />
+				<move todir="${project.dir}/src/${project.name}">
+					<fileset dir="${project.dir}/src">
+						<exclude name="**/template.as" />
+						<include name="**/*" />
+					</fileset>
+				</move>
+				<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${project.name}.as" />
+				<replace file="${project.dir}/src/${project.name}.as" token="@@project_name@@" value="${project.name}" />
 
-		<antcall target="auto_gen_project_setting">
-			<param name="project.dir" value="${project.dir}" />
-		</antcall>
+				<antcall target="auto_gen_project_setting">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
+			</then>
+			<elseif>
+				<available file="${config.dir.src}/${project.name}" type="dir" />
+				<then>
+					<echo>The project "${project.name}" is exist!!</echo>
+				</then>
+			</elseif>
+			<else>
+				<echo>You have to enter a name</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="auto_gen_setting">

@@ -3,7 +3,7 @@
 	 Mar 10, 2014 3:54:12 P
 	 LinkWu
 	 ====================================================================== -->
-<project name="ocean" default="help" basedir=".">
+<project default="help" basedir=".">
 	<description>
 		Flex/AS3 project template
 	</description>
@@ -24,48 +24,35 @@
 			<load-config filename="${config.flex_config.file}" />
 
 			<doc-sources dir="${config.dir.src}">
-				<include name="**/src/**/*.as" />
+				<include name="**/src/*" />
 			</doc-sources>
 
 			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />
 
+			<library-path dir="${config.dir.src}" includes="**/lib/*.swc" append="true" />
 			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<external-library-path dir="${config.dir.src}/" includes="**/rsl/*.swc" append="true" />
 			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
 
 			<jvmarg line="${jvmarg.asdoc}" />
 		</asdoc>
 	</target>
 
-	<target name="select" depends="setup" description="Build the selected">
-		<input message="Please enter project name, delimit them with a comma:" addproperty="projects.name" defaultvalue="${config.select.default}" />
-		<foreach target="build_one" list="${projects.name}" delimiter="," param="project.name" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
+	<target name="select" description="Build the selected">
+		<input message="Please enter project name, delimit them with a comma:" addproperty="targets.name" defaultvalue="" />
+		<java jar="${basedir}/ext/util_order/main.jar" fork="true">
+			<arg value="${basedir}"/>
+			<arg value="${targets.name}"/>
+			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
+		</java>
 	</target>
 
-	<target name="build" depends="setup" description="Build all">
-		<antcall target="build_all" />
-	</target>
-
-	<target name="build_all">
-		<foreach param="project.dir" target="build_one" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true">
-			<path>
-				<dirset dir="${config.dir.src}">
-					<depth max="0" min="0" />
-				</dirset>
-			</path>
-		</foreach>
-	</target>
-
-	<target name="build_one">
-		<basename file="${project.dir}" property="project.name" />
-		<if>
-			<available filepath="${config.dir.src}" file="${project.name}" type="dir" />
-			<then>
-				<ant dir="${config.dir.src}/${project.name}" antfile="${project.name}.xml" target="build" output="${config.dir.log}/${project.name}.log" />
-			</then>
-			<else>
-				<echo>${config.dir.src}/${project.name} is not exist!!</echo>
-			</else>
-		</if>
+	<target name="build" description="Build all">
+		<java jar="${basedir}/ext/util_order/main.jar" fork="true">
+			<arg value="${basedir}"/>
+			<arg value=""/>
+			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
+		</java>
 	</target>
 
 	<target name="wrap" depends="setup" description="Wrap all">
@@ -149,8 +136,8 @@
 		<delete includeemptydirs="true" verbose="true">
 			<fileset dir="${config.dir.src}">
 				<exclude name=".gitkeep" />
-				<exclude name="**/.lib" />
-				<exclude name="**/.rsl" />
+				<exclude name="**/.lib/" />
+				<exclude name="**/.rsl/" />
 				<exclude name="**/.islibrary" />
 				<exclude name="**/.dependlib" />
 				<exclude name="**/.dependrsl" />
@@ -169,58 +156,20 @@
 		</delete>
 	</target>
 
-	<target name="swc" depends="setup" description="New a library project">
-		<input message="Please enter a name for the library project :" addproperty="library.name" />
-		<if>
-			<equals arg1="${library.name}" arg2="" />
-			<then>
-				<fail>
-You have to enter a name
-				</fail>
-			</then>
-		</if>
+	<target name="swc" depends="setup" description="New a swc project">
+		<input message="Please enter some library name, delimit them with a comma:" addproperty="librarys.name" />
 
-		<if>
-			<available file="${config.dir.src}/${library.name}" type="dir" />
-			<then>
-				<fail>
-The project "${library.name}" is exist!!
-				</fail>
-			</then>
-		</if>
-
-		<antcall target="auto_gen_library_project">
-			<param name="library.name" value="${library.name}" />
-		</antcall>
+		<foreach target="auto_gen_library" list="${librarys.name}" delimiter="," param="library.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
-	<target name="swf" depends="setup" description="New a project">
-		<input message="Please enter a name for the project :" addproperty="project.name" />
-		<if>
-			<equals arg1="${project.name}" arg2="" />
-			<then>
-				<fail>
-You have to enter a name
-				</fail>
-			</then>
-		</if>
+	<target name="swf" depends="setup" description="New a swf project">
+		<input message="Please enter some project name, delimit them with a comma:" addproperty="projects.name" />
 
-		<if>
-			<available file="${config.dir.src}/${project.name}" type="dir" />
-			<then>
-				<fail>
-The project "${project.name}" is exist!!
-				</fail>
-			</then>
-		</if>
-
-		<antcall target="auto_gen_project">
-			<param name="project.name" value="${project.name}" />
-		</antcall>
+		<foreach target="auto_gen_project" list="${projects.name}" delimiter="," param="project.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
 	<target name="setting" depends="setup, clean_setting" description="Gen all setting">
-		<foreach param="project.dir" target="auto_gen_setting" parallel="false" maxthreads="4" inheritall="true">
+		<foreach target="auto_gen_setting" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
 			<path>
 				<dirset dir="${config.dir.src}">
 					<depth max="0" min="0" />

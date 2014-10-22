@@ -8,13 +8,15 @@
 	</target>
 
 	<target name="pre_compile">
+		<loadfile property="depend.libs" srcfile="${basedir}/.dependlib" quiet="true" />
 		<if>
 			<isset property="depend.libs" />
 			<then>
 				<foreach target="copy_lib" list="${depend.libs}" delimiter="," param="depend.lib" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
 			</then>
 		</if>
-		
+
+		<loadfile property="depend.rsls" srcfile="${basedir}/.dependrsl" quiet="true" />
 		<if>
 			<isset property="depend.rsls" />
 			<then>
@@ -27,12 +29,14 @@
 		<compc output="${dir.bin}/${ant.project.name}.swc" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="${config.incremental}" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="${config.accessible}" fork="true">
 			<load-config filename="${config.flex_config.file}" />
 
-			<include-sources dir="${dir.src}" includes="**/*" />
+			<include-sources dir="${dir.src}" includes="*" />
 
 			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />
 
+			<library-path dir="${dot.lib}" includes="**/*.swc" append="true" />
 			<library-path dir="${dir.lib}" includes="**/*.swc" append="true" />
 			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<external-library-path dir="${dot.rsl}/" includes="**/*.swc" append="true" />
 			<external-library-path dir="${dir.rsl}/" includes="**/*.swc" append="true" />
 			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
 

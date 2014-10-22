@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="UtilOrder" basedir="." default="package">
+	<property name="dir.src" value="${basedir}/src" />
+	<property name="dir.dst" value="${basedir}/dst" />
+	<property name="dir.lib" value="${basedir}/lib" />
+
+	<target name="init">
+		<mkdir dir="${dir.dst}" />
+		<mkdir dir="${dir.lib}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${dir.src}" destdir="${dir.dst}" includeantruntime="false">
+			<classpath>
+				<fileset dir="${dir.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="package" depends="compile">
+		<jar destfile="${basedir}/main.jar" basedir="${dir.dst}" includes="**/*.class">
+			<manifest>
+				<attribute name="Class-Path" value="./lib/commons-lang3-3.3.2.jar" />
+				<attribute name="Main-Class" value="${ant.project.name}" />
+			</manifest>
+		</jar>
+	</target>
+</project>

@@ -12,7 +12,7 @@ config.accessible=false
 config.wmode=direct
 config.debug=false
 config.debug.password=123456
-config.parallel=false
+config.parallel=true
 config.maxthread=4
 
 config.sdk.type=adobe
@@ -32,8 +32,6 @@ config.dir.template=${config.dir.ext}/template
 
 config.library_project.prefix=lib
 config.project.prefix=
-
-config.select.default=
 
 #config.log.level=debug|error|info|verbose|warn
 config.log.level=info
