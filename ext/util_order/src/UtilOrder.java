@@ -6,11 +6,13 @@ import java.io.InputStreamReader;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,8 +22,11 @@ public class UtilOrder {
 	private static final String ANT = "ant.bat";
 
 	private String _root_path;
-	private ArrayList<String> _targets;
-	private Map<String, Integer> _kv;
+	private Set<String> _targets;
+	private Map<String, Order> _order_map;
+	
+	private List<Set<String>> _phases;
+	private Set<String> _dones;
 
 	private ProcessBuilder _pb;
 
@@ -29,12 +34,14 @@ public class UtilOrder {
 		_root_path = root_path;
 
 		if (null == targets || "".equals(targets)) {
-			_targets = new ArrayList<String>();
+			_targets = new HashSet<String>();
 		} else {
-			_targets = new ArrayList<String>(Arrays.asList(targets.split(",")));
+			_targets = new HashSet<String>(Arrays.asList(targets.split(",")));
 		}
 
-		_kv = new HashMap<String, Integer>();
+		_order_map = new HashMap<String, Order>();
+		_phases = new ArrayList<Set<String>>();
+		_dones = new HashSet<String>();
 
 		_pb = new ProcessBuilder();
 		_pb.directory(new File(_root_path));
@@ -42,27 +49,20 @@ public class UtilOrder {
 		_pb.environment().put("ANT_OPTS", FILE_ENCODING.replaceAll("FILE_ENCODING", System.getProperty("file.encoding")));
 	}
 
-	public void order() throws Exception {
-		this.getTargetsFile();
-
-		Map<Integer, List<String>> ks = new HashMap<Integer, List<String>>();
-		Integer value;
-		for (Entry<String, Integer> kv : _kv.entrySet()) {
-			value = kv.getValue();
-			if (!ks.containsKey(value)) {
-				ks.put(value, new ArrayList<String>());
+	public int order() throws Exception {
+		this.calc_depend();
+		
+		if(this.solve_depend()){
+			Iterator<Set<String>> iter = _phases.iterator();
+			while(iter.hasNext()){
+//				System.out.println(StringUtils.join(iter.next().toArray(new String[0]), ","));
+				this.exec(StringUtils.join(iter.next().toArray(new String[0]), ","));
 			}
-			ks.get(value).add(kv.getKey());
+		}else{
+			return 1;
 		}
-
-		Integer[] i_arr = ks.keySet().toArray(new Integer[0]);
-		Arrays.sort(i_arr);
-		Collections.reverse(Arrays.asList(i_arr));
-
-		for (Integer integer : i_arr) {
-//			System.out.println(StringUtils.join(ks.get(integer), ","));
-			this.exec(StringUtils.join(ks.get(integer), ","));
-		}
+		
+		return 0;
 	}
 
 	private String readContent(String fileName) throws Exception {
@@ -76,47 +76,75 @@ public class UtilOrder {
 		return result;
 	}
 
-	private void getTargetsFile() throws Exception {
+	private void calc_depend() throws Exception {
 		ArrayList<File> targets_file = new ArrayList<File>(Arrays.asList(new File(_root_path + "/src").listFiles()));
 		for (File file : targets_file) {
-			if (file.isDirectory()
-					&& (0 == _targets.size() || _targets.contains(file.getName()))) {
+			if (file.isDirectory() && (0 == _targets.size() || _targets.contains(file.getName()))) {
 				this.calc(file);
 			}
 		}
 	}
 
 	private void calc(File dir) throws Exception {
-		String dir_name = dir.getName();
-		this.mark(dir_name);
+		String key = dir.getName();
+		
+		if(!_order_map.containsKey(key)){
+			_order_map.put(key, new Order(key));
+		}
+		Order key_order = _order_map.get(key);
+		
 		
 		String[] depend_arr;
 
 		depend_arr = this.readContent(dir.getAbsolutePath() + "/.dependlib").split(",");
 		for (String depend : depend_arr) {
-			if (null != depend && !"".equals(depend)) {
-				this.mark(depend);
+			if (null != depend && !"".equals(depend.trim())) {
+				key_order.depends.add(depend);
+				
 				this.calc(new File(_root_path + "/src/" + depend));
 			}
 		}
 
 		depend_arr = this.readContent(dir.getAbsolutePath() + "/.dependrsl").split(",");
 		for (String depend : depend_arr) {
-			if (null != depend && !"".equals(depend)) {
-				this.mark(depend);
+			if (null != depend && !"".equals(depend.trim())) {
+				key_order.depends.add(depend);
+				
 				this.calc(new File(_root_path + "/src/" + depend));
 			}
 		}
 	}
 	
-	private void mark(String key){
-		if (_kv.containsKey(key)) {
-			_kv.put(key, _kv.get(key) + 1);
-		} else {
-			_kv.put(key, 1);
+	private boolean solve_depend(){
+		Set<String> phase;
+		
+		Collection<Order> orders = _order_map.values();
+		
+		int max_loop = 16;
+		while(0 < --max_loop){
+			phase = new HashSet<String>();
+			for (Order order : orders) {
+				if(!order.done && order.isDone(_dones)){
+					order.done = true;
+					phase.add(order.key);
+				}
+			}
+			_phases.add(phase);
+			_dones.addAll(phase);
+			
+			if(_dones.size() == orders.size()){
+				break;
+			}
 		}
+		
+		if(0 == max_loop){
+			System.out.println("Loop depend ?");
+			return false;
+		}
+		
+		return true;
 	}
-
+	
 	private void exec(String targets_str) throws Exception {
 		_pb.command().clear();
 		_pb.command(ANT, "-f", "build_order.xml", "build_more", TARGETS_NAME.replaceAll("TARGETS_NAME", targets_str));
@@ -132,7 +160,7 @@ public class UtilOrder {
 	}
 
 	public static void main(String[] args) throws Exception {
-//		new UtilOrder("E:/workspace_git/flex_ant_project_template", "embed,common,bag").order();
-		new UtilOrder(args[0], 1 == args.length ? "" : args[1]).order();
+//		System.exit(new UtilOrder("E:/workspace_git/flex_ant_project_template", "").order());
+		System.exit(new UtilOrder(args[0], 1 == args.length ? "" : args[1]).order());
 	}
 }

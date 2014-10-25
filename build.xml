@@ -40,7 +40,7 @@
 
 	<target name="select" description="Build the selected">
 		<input message="Please enter project name, delimit them with a comma:" addproperty="targets.name" defaultvalue="" />
-		<java jar="${basedir}/ext/util_order/main.jar" fork="true">
+		<java jar="${basedir}/ext/util_order/main.jar" fork="true" failonerror="true">
 			<arg value="${basedir}"/>
 			<arg value="${targets.name}"/>
 			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
@@ -48,7 +48,7 @@
 	</target>
 
 	<target name="build" description="Build all">
-		<java jar="${basedir}/ext/util_order/main.jar" fork="true">
+		<java jar="${basedir}/ext/util_order/main.jar" fork="true" failonerror="true">
 			<arg value="${basedir}"/>
 			<arg value=""/>
 			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
