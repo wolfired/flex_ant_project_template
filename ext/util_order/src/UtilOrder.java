@@ -88,11 +88,12 @@ public class UtilOrder {
 	private void calc(File dir) throws Exception {
 		String key = dir.getName();
 		
-		if(!_order_map.containsKey(key)){
-			_order_map.put(key, new Order(key));
+		if(_order_map.containsKey(key)){
+			return;
 		}
-		Order key_order = _order_map.get(key);
 		
+		Order key_order = new Order(key);
+		_order_map.put(key, key_order);
 		
 		String[] depend_arr;
 
