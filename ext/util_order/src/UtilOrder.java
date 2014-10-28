@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 public class UtilOrder {
 	private static final String FILE_ENCODING = "-Dfile.encoding=FILE_ENCODING";
 	private static final String TARGETS_NAME = "-Dtargets.name=\"TARGETS_NAME\"";
-	private static final String ANT = "ant.bat";
 
 	private String _root_path;
 	private Set<String> _targets;
@@ -52,17 +51,16 @@ public class UtilOrder {
 	public int order() throws Exception {
 		this.calc_depend();
 		
+		int exit_code = 0;
 		if(this.solve_depend()){
 			Iterator<Set<String>> iter = _phases.iterator();
-			while(iter.hasNext()){
+			while(0 == exit_code && iter.hasNext()){
 //				System.out.println(StringUtils.join(iter.next().toArray(new String[0]), ","));
-				this.exec(StringUtils.join(iter.next().toArray(new String[0]), ","));
+				exit_code = this.exec(StringUtils.join(iter.next().toArray(new String[0]), ","));
 			}
-		}else{
-			return 1;
 		}
 		
-		return 0;
+		return exit_code;
 	}
 
 	private String readContent(String fileName) throws Exception {
@@ -146,9 +144,9 @@ public class UtilOrder {
 		return true;
 	}
 	
-	private void exec(String targets_str) throws Exception {
+	private int exec(String targets_str) throws Exception {
 		_pb.command().clear();
-		_pb.command(ANT, "-f", "build_order.xml", "build_more", TARGETS_NAME.replaceAll("TARGETS_NAME", targets_str));
+		_pb.command(this.ant(), "-f", "build_order.xml", "build_more", TARGETS_NAME.replaceAll("TARGETS_NAME", targets_str));
 		Process ps = _pb.start();
 		InputStream is = ps.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
@@ -158,6 +156,17 @@ public class UtilOrder {
 			System.out.println(line);
 		}
 		br.close();
+
+		return ps.exitValue();
+	}
+
+	private String ant(){
+		String os_name = System.getProperty("os.name");
+		if(null == os_name || "".equals(os_name) || os_name.startsWith("Window") || os_name.startsWith("window")){
+			return "ant.bat";
+		}
+		
+		return "ant";
 	}
 
 	public static void main(String[] args) throws Exception {

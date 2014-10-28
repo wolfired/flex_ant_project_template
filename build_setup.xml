@@ -44,9 +44,7 @@
 		<property file="config4ant.properties" />
 
 		<if>
-			<or>
-				<equals arg1="${FLEX_HOME}" arg2="" />
-			</or>
+			<equals arg1="${FLEX_HOME}" arg2="" />
 			<then>
 				<fail>
 You need to edit the config4user.properties:

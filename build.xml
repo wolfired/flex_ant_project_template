@@ -50,7 +50,6 @@
 	<target name="build" description="Build all">
 		<java jar="${basedir}/ext/util_order/main.jar" fork="true" failonerror="true">
 			<arg value="${basedir}"/>
-			<arg value=""/>
 			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
 		</java>
 	</target>
