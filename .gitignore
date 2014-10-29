@@ -2,6 +2,7 @@
 !/bin/.gitkeep
 
 /ext/util_*/dst/
+/ext/swc_pkg/
 
 /log/*
 !/log/.gitkeep

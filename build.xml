@@ -10,6 +10,7 @@
 
 	<import file="build_setup.xml" />
 	<import file="build_gen.xml" />
+	<import file="build_ftp.xml" />
 
 	<target name="help" description="Show help message">
 	</target>
@@ -52,6 +53,14 @@
 			<arg value="${basedir}"/>
 			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
 		</java>
+	</target>
+
+	<target name="up" depends="setup" description="Upload the swc">
+		<antcall target="ftp_up" />
+	</target>
+	
+	<target name="down" depends="setup" description="Download the swc">
+		<antcall target="ftp_down" />
 	</target>
 
 	<target name="wrap" depends="setup" description="Wrap all">

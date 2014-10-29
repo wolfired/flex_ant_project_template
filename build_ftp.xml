@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<target name="ftp_up">
+		<ftp passive="true" userid="a7148685" password="${ftp.pass}" server="hyrule.comule.com" action="send" remotedir="public_html/swc_pkg" verbose="true">
+			<fileset dir="${config.dir.src}">
+				<exclude name="**/*" />
+			</fileset>
+		</ftp>
+	</target>
+	<target name="ftp_down">
+		<ftp passive="true" userid="a7148685" password="${ftp.pass}" server="hyrule.comule.com" action="get" remotedir="public_html/swc_pkg" verbose="true">
+			<fileset dir="${config.dir.ext}/swc_pkg">
+				<exclude name="**/*" />
+			</fileset>
+		</ftp>
+	</target>
+</project>
