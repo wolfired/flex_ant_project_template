@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
 	<target name="setup">
+		<property environment="env" />
+		
 		<path id="ant.contrib.classpath">
 			<fileset dir="${basedir}/ext/ant_contrib">
 				<include name="**/*.jar" />
@@ -14,6 +16,17 @@
 			</fileset>
 		</path>
 		<taskdef resource="flexTasks.tasks" classpathref="ant.flex.classpath" />
+		
+		<propertyregex property="is_windows_platform" input="${os.name}" casesensitive="false" regexp="window" select="\0"/>
+		<if>
+			<isset property="is_windows_platform"/>
+			<then>
+				<property name="exe_suffix" value=".exe"/>
+			</then>
+			<else>
+				<property name="exe_suffix" value=""/>
+			</else>
+		</if>		
 
 		<if>
 			<or>
@@ -35,9 +48,23 @@
 				<uptodate targetfile="config4user.properties" srcfile="config4ant.properties" />
 			</or>
 			<then>
-				<exec executable="native2ascii">
-					<arg line="-encoding UTF-8 config4user.properties config4ant.properties" />
-				</exec>
+		    	<if>
+		    		<available file="native2ascii${exe_suffix}" filepath="${env.Path}" />
+		    		<then>
+						<exec executable="native2ascii">
+							<arg line="-encoding UTF-8 config4user.properties config4ant.properties" />
+						</exec>		    			
+		    		</then>
+		    		<else>
+		    			<echo>
+[[Warning]]
+The build script just copy the config4user.properties to config4ant.properties
+Maybe you need the `native2ascii${exe_suffix}` if you have non english character in the config4user.properties
+[[Warning]]
+		    			</echo>
+		    			<copy file="config4user.properties" tofile="config4ant.properties" />	    			
+		    		</else>
+		    	</if>
 			</then>
 		</if>
 
