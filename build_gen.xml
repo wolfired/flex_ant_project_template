@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
 	<target name="auto_gen_library">
+		<antcall target="svn_check"/>
+		
 		<if>
 			<and>
 				<not>
@@ -40,6 +42,15 @@
 				<antcall target="auto_gen_library_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
+				
+				<if>
+					<equals arg1="${config.is_use_svn}" arg2="true"/>
+					<then>
+						<antcall target="svn_set_ignore_list">
+							<param name="project.dir" value="${project.dir}" />
+						</antcall>
+					</then>
+				</if>
 			</then>
 			<elseif>
 				<available file="${config.dir.src}/${library.name}" type="dir" />
@@ -54,6 +65,8 @@
 	</target>
 
 	<target name="auto_gen_project">
+		<antcall target="svn_check"/>
+		
 		<if>
 			<and>
 				<not>
@@ -96,6 +109,15 @@
 				<antcall target="auto_gen_project_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
+				
+				<if>
+					<equals arg1="${config.is_use_svn}" arg2="true"/>
+					<then>
+						<antcall target="svn_set_ignore_list">
+							<param name="project.dir" value="${project.dir}" />
+						</antcall>
+					</then>
+				</if>
 			</then>
 			<elseif>
 				<available file="${config.dir.src}/${project.name}" type="dir" />
@@ -180,4 +202,35 @@
 			<arg value="${config.library_project.prefix}"/>
 		</java>
 	</target>
+	
+	<target name="svn_check">
+		<if>
+			<and>
+				<equals arg1="${config.is_use_svn}" arg2="true"/>
+				<not>
+					<available file="svn${exe_suffix}" filepath="${env.Path}" />
+				</not>
+			</and>
+			<then>
+    			<fail>
+You have to add svn${exe_suffix} to the Path
+        		</fail>
+			</then>
+		</if>
+	</target>
+	
+    <target name="svn_set_ignore_list">
+    	<exec executable="svn">
+    		<arg value="add"/>
+    		<arg value="-N"/>
+    		<arg value="${project.dir}"/>
+    	</exec>
+    	<exec executable="svn">
+    		<arg value="ps"/>
+    		<arg value="svn:ignore"/>
+    		<arg value="-F"/>
+    		<arg value="${config.ignore_setting4svn}"/>
+    		<arg value="${project.dir}"/>
+    	</exec>
+    </target>
 </project>

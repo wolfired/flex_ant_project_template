@@ -30,6 +30,9 @@ config.dir.log=${basedir}/log
 config.dir.playerglobal=${config.dir.ext}/playerglobal/${config.player.version}
 config.dir.template=${config.dir.ext}/template
 
+config.is_use_svn=false
+config.ignore_setting4svn=${config.dir.template}/ignore_setting4svn
+
 config.library_project.prefix=lib
 config.project.prefix=
 
