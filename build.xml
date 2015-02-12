@@ -58,7 +58,7 @@
 	<target name="up" depends="setup" description="Upload the swc">
 		<antcall target="ftp_up" />
 	</target>
-	
+
 	<target name="down" depends="setup" description="Download the swc">
 		<antcall target="ftp_down" />
 	</target>
@@ -94,7 +94,7 @@
 				<echo>${project.name} is not a runnable project!!</echo>
 			</else>
 		</if>
-	</target>	
+	</target>
 
 	<target name="clean" depends="setup" description="Clean all">
 		<antcall target="clean_bin" />
@@ -140,7 +140,7 @@
 		</delete>
 	</target>
 
-	<target name="clean_setting" depends="setup" description="Clean all">
+	<target name="clean_setting" depends="setup" description="Clean all setting">
 		<delete includeemptydirs="true" verbose="true">
 			<fileset dir="${config.dir.src}">
 				<exclude name=".gitkeep" />

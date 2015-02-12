@@ -1,4 +1,3 @@
-flex_ant_project_template
+Ant template for flex project
 =========================
-
-This is a project template of ant for the flex project
+This is an ant template for modular flex project
