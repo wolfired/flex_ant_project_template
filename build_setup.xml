@@ -21,10 +21,10 @@
 		<if>
 			<isset property="is_windows_platform"/>
 			<then>
-				<property name="exe_suffix" value=".exe"/>
+				<property name="exec_suffix" value=".exe"/>
 			</then>
 			<else>
-				<property name="exe_suffix" value=""/>
+				<property name="exec_suffix" value=""/>
 			</else>
 		</if>		
 
@@ -49,7 +49,7 @@
 			</or>
 			<then>
 		    	<if>
-		    		<available file="native2ascii${exe_suffix}" filepath="${env.Path}" />
+		    		<available file="native2ascii${exec_suffix}" filepath="${env.Path}" />
 		    		<then>
 						<exec executable="native2ascii">
 							<arg line="-encoding UTF-8 config4user.properties config4ant.properties" />
@@ -59,7 +59,7 @@
 		    			<echo>
 [[Warning]]
 The build script just copy the config4user.properties to config4ant.properties
-Maybe you need the `native2ascii${exe_suffix}` if you have non english character in the config4user.properties
+Maybe you need the `native2ascii${exec_suffix}` if you have non english character in the config4user.properties
 [[Warning]]
 		    			</echo>
 		    			<copy file="config4user.properties" tofile="config4ant.properties" />	    			

@@ -167,13 +167,13 @@
 	<target name="swc" depends="setup" description="New a swc project">
 		<input message="Please enter some library name, delimit them with a comma:" addproperty="librarys.name" />
 
-		<foreach target="auto_gen_library" list="${librarys.name}" delimiter="," param="library.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
+		<foreach target="auto_gen_swc_project" list="${librarys.name}" delimiter="," param="library.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
 	<target name="swf" depends="setup" description="New a swf project">
 		<input message="Please enter some project name, delimit them with a comma:" addproperty="projects.name" />
 
-		<foreach target="auto_gen_project" list="${projects.name}" delimiter="," param="project.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
+		<foreach target="auto_gen_swf_project" list="${projects.name}" delimiter="," param="project.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
 	<target name="setting" depends="setup, clean_setting" description="Gen all setting">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-	<target name="auto_gen_library">
+	<target name="auto_gen_swc_project">
 		<antcall target="svn_check"/>
 		
 		<if>
@@ -16,7 +16,7 @@
 				<property name="project.dir" value="${config.dir.src}/${library.name}" />
 
 				<copy todir="${project.dir}" includeemptydirs="true">
-					<fileset dir="${config.dir.template}/library_project">
+					<fileset dir="${config.dir.template}/swc_project">
 						<include name="bin" />
 						<include name="lib" />
 						<include name="rsl" />
@@ -39,18 +39,13 @@
 					</fileset>
 				</move>
 
-				<antcall target="auto_gen_library_setting">
+				<antcall target="auto_gen_swc_project_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
 				
-				<if>
-					<equals arg1="${config.is_use_svn}" arg2="true"/>
-					<then>
-						<antcall target="svn_set_ignore_list">
-							<param name="project.dir" value="${project.dir}" />
-						</antcall>
-					</then>
-				</if>
+				<antcall target="svn_set_ignore_list">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
 			</then>
 			<elseif>
 				<available file="${config.dir.src}/${library.name}" type="dir" />
@@ -64,7 +59,7 @@
 		</if>
 	</target>
 
-	<target name="auto_gen_project">
+	<target name="auto_gen_swf_project">
 		<antcall target="svn_check"/>
 		
 		<if>
@@ -80,7 +75,7 @@
 				<property name="project.dir" value="${config.dir.src}/${project.name}" />
 
 				<copy todir="${project.dir}" includeemptydirs="true">
-					<fileset dir="${config.dir.template}/project">
+					<fileset dir="${config.dir.template}/swf_project">
 						<exclude name="src/.*" />
 						<include name="bin" />
 						<include name="lib" />
@@ -106,18 +101,13 @@
 				<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${project.name}.as" />
 				<replace file="${project.dir}/src/${project.name}.as" token="@@project_name@@" value="${project.name}" />
 
-				<antcall target="auto_gen_project_setting">
+				<antcall target="auto_gen_swf_project_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
 				
-				<if>
-					<equals arg1="${config.is_use_svn}" arg2="true"/>
-					<then>
-						<antcall target="svn_set_ignore_list">
-							<param name="project.dir" value="${project.dir}" />
-						</antcall>
-					</then>
-				</if>
+				<antcall target="svn_set_ignore_list">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
 			</then>
 			<elseif>
 				<available file="${config.dir.src}/${project.name}" type="dir" />
@@ -135,23 +125,23 @@
 		<if>
 			<available file="${project.dir}/.islibrary"/>
 			<then>
-				<antcall target="auto_gen_library_setting">
+				<antcall target="auto_gen_swc_project_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
 			</then>
 			<else>
-				<antcall target="auto_gen_project_setting">
+				<antcall target="auto_gen_swf_project_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
 			</else>
 		</if>
 	</target>
 
-	<target name="auto_gen_library_setting">
+	<target name="auto_gen_swc_project_setting">
 		<basename file="${project.dir}" property="project.name" />
 
 		<copy todir="${project.dir}">
-			<fileset dir="${config.dir.template}/library_project">
+			<fileset dir="${config.dir.template}/swc_project">
 				<include name=".settings/" />
 				<include name=".actionScriptProperties" />
 				<include name=".flexLibProperties" />
@@ -175,11 +165,11 @@
 		</java>
 	</target>
 
-	<target name="auto_gen_project_setting">
+	<target name="auto_gen_swf_project_setting">
 		<basename file="${project.dir}" property="project.name" />
 
 		<copy todir="${project.dir}">
-			<fileset dir="${config.dir.template}/project">
+			<fileset dir="${config.dir.template}/swf_project">
 				<include name=".settings/" />
 				<include name=".actionScriptProperties" />
 				<include name=".flexProperties" />
@@ -208,29 +198,34 @@
 			<and>
 				<equals arg1="${config.is_use_svn}" arg2="true"/>
 				<not>
-					<available file="svn${exe_suffix}" filepath="${env.Path}" />
+					<available file="svn${exec_suffix}" filepath="${env.Path}" />
 				</not>
 			</and>
 			<then>
     			<fail>
-You have to add svn${exe_suffix} to the Path
+You have to add `svn${exec_suffix}` to the Path
         		</fail>
 			</then>
 		</if>
 	</target>
 	
     <target name="svn_set_ignore_list">
-    	<exec executable="svn">
-    		<arg value="add"/>
-    		<arg value="-N"/>
-    		<arg value="${project.dir}"/>
-    	</exec>
-    	<exec executable="svn">
-    		<arg value="ps"/>
-    		<arg value="svn:ignore"/>
-    		<arg value="-F"/>
-    		<arg value="${config.ignore_setting4svn}"/>
-    		<arg value="${project.dir}"/>
-    	</exec>
+		<if>
+			<equals arg1="${config.is_use_svn}" arg2="true"/>
+			<then>
+		    	<exec executable="svn">
+		    		<arg value="add"/>
+		    		<arg value="-N"/>
+		    		<arg value="${project.dir}"/>
+		    	</exec>
+		    	<exec executable="svn">
+		    		<arg value="ps"/>
+		    		<arg value="svn:ignore"/>
+		    		<arg value="-F"/>
+		    		<arg value="${config.ignore_setting4svn}"/>
+		    		<arg value="${project.dir}"/>
+		    	</exec>
+			</then>
+		</if>
     </target>
 </project>
