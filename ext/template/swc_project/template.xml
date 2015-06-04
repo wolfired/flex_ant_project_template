@@ -12,5 +12,5 @@
 		<!-- write custom code -->
 	</target>
 
-	<import file="../../library_project.xml" />
+	<import file="../../swc_project.xml" />
 </project>

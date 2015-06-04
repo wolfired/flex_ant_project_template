@@ -12,5 +12,5 @@
 		<!-- write custom code -->
 	</target>
 
-	<import file="../../project.xml" />
+	<import file="../../swf_project.xml" />
 </project>

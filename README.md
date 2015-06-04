@@ -61,4 +61,4 @@ flex_config_*.xml
 config.is_use_svn=true
 ```
 
-###Good luck!!
+###Good Luck!!
