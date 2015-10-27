@@ -36,6 +36,8 @@ config.ignore_setting4svn=${config.dir.template}/ignore_setting4svn
 config.library_project.prefix=lib
 config.project.prefix=
 
+config.rsl.postfix=swf
+
 #config.log.level=debug|error|info|verbose|warn
 config.log.level=info
 config.verbose=true

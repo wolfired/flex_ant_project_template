@@ -16,7 +16,7 @@
 	</target>
 
 	<target name="menu" description="Show menu">
-		<input message="Select the target..." validargs="clean,doc,help,build,wrap" addproperty="menu.target" defaultvalue="help" />
+		<input message="Select the target..." validargs="clean,doc,help,build,deploy,wrap" addproperty="menu.target" defaultvalue="help" />
 		<antcall target="${menu.target}" />
 	</target>
 
@@ -55,6 +55,57 @@
 		</java>
 	</target>
 
+	<target name="deploy" depends="setup" description="Deploy all">
+		<foreach param="file" target="deploy_rsl" parallel="false" inheritall="true">
+			<path>
+				<fileset dir="${config.dir.rsl}" includes="*.swc" />
+			</path>
+		</foreach>
+
+		<foreach param="path" target="deploy_module" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true">
+			<path>
+				<dirset dir="${config.dir.src}">
+					<depth max="0" min="0" />
+				</dirset>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="deploy_rsl">
+		<basename file="${file}" property="real.file.name" suffix="swc" />
+
+		<if>
+			<or>
+				<not>
+					<available file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				</not>
+				<uptodate targetfile="${file}" srcfile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+			</or>
+			<then>
+				<unzip src="${file}" dest="${config.dir.bin}">
+					<patternset>
+						<include name="**/*.swf" />
+					</patternset>
+				</unzip>
+				<move file="${config.dir.bin}/library.swf" tofile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" verbose="${config.verbose}" />
+				<touch file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+			</then>
+		</if>
+	</target>
+
+	<target name="deploy_module">
+		<basename file="${path}" property="real.path.name" />
+		<if>
+			<available filepath="${config.dir.src}" file="${real.path.name}" type="dir" />
+			<then>
+				<ant dir="${config.dir.src}/${real.path.name}" antfile="${real.path.name}.xml" target="deploy" output="${config.dir.log}/${real.path.name}_deploy.log" />
+			</then>
+			<else>
+				<echo>${config.dir.src}/${real.path.name} is not exist!!</echo>
+			</else>
+		</if>
+	</target>
+
 	<target name="up" depends="setup" description="Upload the swc">
 		<antcall target="ftp_up" />
 	</target>
@@ -90,8 +141,6 @@
 				<ant dir="${config.dir.src}/${project.name}" antfile="${project.name}.xml" target="wrapper" output="${config.dir.log}/${project.name}.log" />
 			</then>
 			<else>
-				<echo>${config.dir.src}/${project.name} is not exist!!</echo>
-				<echo>${project.name} is not a runnable project!!</echo>
 			</else>
 		</if>
 	</target>

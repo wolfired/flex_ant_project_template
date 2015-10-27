@@ -11,7 +11,7 @@
 		<if>
 			<available filepath="${config.dir.src}" file="${target.name}" type="dir" />
 			<then>
-				<ant dir="${config.dir.src}/${target.name}" antfile="${target.name}.xml" target="build" output="${config.dir.log}/${target.name}.log" />
+				<ant dir="${config.dir.src}/${target.name}" antfile="${target.name}.xml" target="build" output="${config.dir.log}/${target.name}_build.log" />
 			</then>
 			<else>
 				<echo>${config.dir.src}/${target.name} is not exist!!</echo>

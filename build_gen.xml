@@ -17,12 +17,14 @@
 
 				<copy todir="${project.dir}" includeemptydirs="true">
 					<fileset dir="${config.dir.template}/swc_project">
+						<exclude name="src/.*" />
 						<include name="bin" />
 						<include name="lib" />
 						<include name="rsl" />
 						<include name=".lib" />
 						<include name=".rsl" />
 						<include name="src" />
+						<include name="src/" />
 						<include name=".islibrary" />
 						<include name=".dependlib" />
 						<include name=".dependrsl" />
@@ -35,9 +37,12 @@
 
 				<move todir="${project.dir}/src/${library.name}">
 					<fileset dir="${project.dir}/src">
+						<exclude name="**/template.as" />
 						<include name="**/*" />
 					</fileset>
 				</move>
+				<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${library.name}.as" />
+				<replace file="${project.dir}/src/${library.name}.as" token="@@project_name@@" value="${library.name}" />
 
 				<antcall target="auto_gen_swc_project_setting">
 					<param name="project.dir" value="${project.dir}" />

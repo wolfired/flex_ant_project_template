@@ -100,8 +100,7 @@
 			<path-element>${flexlib}/libs</path-element>
 			<path-element>${flexlib}/libs/mx</path-element>
 			<path-element>${flexlib}/locale/en_US</path-element>
-			<path-element>${flexlib}/libs/player/{targetPlayerMajorVersion}.{targetPlayerMinorVersion}
-			</path-element>
+			<!-- <path-element>${flexlib}/libs/player/{targetPlayerMajorVersion}.{targetPlayerMinorVersion}</path-element> -->
 		</library-path>
 		<!-- compiler.locale: 指定国际化的区域 -->
 		<locale>
