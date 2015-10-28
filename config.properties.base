@@ -1,6 +1,10 @@
 FLEX_HOME=
 #FLEX_HOME=D:/Adobe/Adobe Flash Builder 4.7 (64 Bit)/sdks/4.6.0
 
+config.sdk.type=adobe
+#config.sdk.type=apache
+config.flex_config.file=${basedir}/flex_config_${config.sdk.type}.xml
+
 config.locale=en_US
 config.player.version-major=12
 config.player.version-minor=0
@@ -14,10 +18,6 @@ config.debug=false
 config.debug.password=123456
 config.parallel=true
 config.maxthread=4
-
-config.sdk.type=adobe
-#config.sdk.type=apache
-config.flex_config.file=${basedir}/flex_config_${config.sdk.type}.xml
 
 config.dir.bin=${basedir}/bin
 config.dir.ext=${basedir}/ext
@@ -33,8 +33,8 @@ config.dir.template=${config.dir.ext}/template
 config.is_use_svn=false
 config.ignore_setting4svn=${config.dir.template}/ignore_setting4svn
 
-config.library_project.prefix=lib
-config.project.prefix=
+config.swc_project.prefix=lib
+config.swf_project.prefix=
 
 config.rsl.postfix=swf
 

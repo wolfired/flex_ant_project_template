@@ -6,14 +6,14 @@
 		<if>
 			<and>
 				<not>
-					<equals arg1="${library.name}" arg2="" />
+					<equals arg1="${swc.name}" arg2="" />
 				</not>
 				<not>
-					<available file="${config.dir.src}/${library.name}" type="dir" />
+					<available file="${config.dir.src}/${swc.name}" type="dir" />
 				</not>
 			</and>
 			<then>
-				<property name="project.dir" value="${config.dir.src}/${library.name}" />
+				<property name="project.dir" value="${config.dir.src}/${swc.name}" />
 
 				<copy todir="${project.dir}" includeemptydirs="true">
 					<fileset dir="${config.dir.template}/swc_project">
@@ -32,17 +32,17 @@
 					</fileset>
 				</copy>
 
-				<move file="${project.dir}/template.xml" tofile="${project.dir}/${library.name}.xml" />
-				<replace file="${project.dir}/${library.name}.xml" token="@@project_name@@" value="${library.name}" />
+				<move file="${project.dir}/template.xml" tofile="${project.dir}/${swc.name}.xml" />
+				<replace file="${project.dir}/${swc.name}.xml" token="@@project_name@@" value="${swc.name}" />
 
-				<move todir="${project.dir}/src/${library.name}">
+				<move todir="${project.dir}/src/${swc.name}">
 					<fileset dir="${project.dir}/src">
 						<exclude name="**/template.as" />
 						<include name="**/*" />
 					</fileset>
 				</move>
-				<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${library.name}.as" />
-				<replace file="${project.dir}/src/${library.name}.as" token="@@project_name@@" value="${library.name}" />
+				<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${swc.name}.as" />
+				<replace file="${project.dir}/src/${swc.name}.as" token="@@project_name@@" value="${swc.name}" />
 
 				<antcall target="auto_gen_swc_project_setting">
 					<param name="project.dir" value="${project.dir}" />
@@ -53,9 +53,9 @@
 				</antcall>
 			</then>
 			<elseif>
-				<available file="${config.dir.src}/${library.name}" type="dir" />
+				<available file="${config.dir.src}/${swc.name}" type="dir" />
 				<then>
-					<echo>The project "${library.name}" is exist!!</echo>
+					<echo>The project "${swc.name}" is exist!!</echo>
 				</then>
 			</elseif>
 			<else>
@@ -70,14 +70,14 @@
 		<if>
 			<and>
 				<not>
-					<equals arg1="${project.name}" arg2="" />
+					<equals arg1="${swf.name}" arg2="" />
 				</not>
 				<not>
-					<available file="${config.dir.src}/${project.name}" type="dir" />
+					<available file="${config.dir.src}/${swf.name}" type="dir" />
 				</not>
 			</and>
 			<then>
-				<property name="project.dir" value="${config.dir.src}/${project.name}" />
+				<property name="project.dir" value="${config.dir.src}/${swf.name}" />
 
 				<copy todir="${project.dir}" includeemptydirs="true">
 					<fileset dir="${config.dir.template}/swf_project">
@@ -94,17 +94,17 @@
 						<include name="template.xml" />
 					</fileset>
 				</copy>
-				<move file="${project.dir}/template.xml" tofile="${project.dir}/${project.name}.xml" />
-				<replace file="${project.dir}/${project.name}.xml" token="@@project_name@@" value="${project.name}" />
+				<move file="${project.dir}/template.xml" tofile="${project.dir}/${swf.name}.xml" />
+				<replace file="${project.dir}/${swf.name}.xml" token="@@project_name@@" value="${swf.name}" />
 
-				<move todir="${project.dir}/src/${project.name}">
+				<move todir="${project.dir}/src/${swf.name}">
 					<fileset dir="${project.dir}/src">
 						<exclude name="**/template.as" />
 						<include name="**/*" />
 					</fileset>
 				</move>
-				<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${project.name}.as" />
-				<replace file="${project.dir}/src/${project.name}.as" token="@@project_name@@" value="${project.name}" />
+				<move file="${project.dir}/src/template.as" tofile="${project.dir}/src/${swf.name}.as" />
+				<replace file="${project.dir}/src/${swf.name}.as" token="@@project_name@@" value="${swf.name}" />
 
 				<antcall target="auto_gen_swf_project_setting">
 					<param name="project.dir" value="${project.dir}" />
@@ -115,9 +115,9 @@
 				</antcall>
 			</then>
 			<elseif>
-				<available file="${config.dir.src}/${project.name}" type="dir" />
+				<available file="${config.dir.src}/${swf.name}" type="dir" />
 				<then>
-					<echo>The project "${project.name}" is exist!!</echo>
+					<echo>The project "${swf.name}" is exist!!</echo>
 				</then>
 			</elseif>
 			<else>
@@ -154,9 +154,9 @@
 			</fileset>
 		</copy>
 
-		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.library_project.prefix}${project.name}" />
+		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.swc_project.prefix}${project.name}" />
 
-		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${config.library_project.prefix}${project.name}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${config.swc_project.prefix}${project.name}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
@@ -166,7 +166,7 @@
 
 		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
 			<arg value="${project.dir}"/>
-			<arg value="${config.library_project.prefix}"/>
+			<arg value="${config.swc_project.prefix}"/>
 		</java>
 	</target>
 
@@ -182,9 +182,9 @@
 			</fileset>
 		</copy>
 
-		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.project.prefix}${project.name}" />
+		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
 
-		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${project.name}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
@@ -194,7 +194,7 @@
 
 		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
 			<arg value="${project.dir}"/>
-			<arg value="${config.library_project.prefix}"/>
+			<arg value="${config.swf_project.prefix}"/>
 		</java>
 	</target>
 	
