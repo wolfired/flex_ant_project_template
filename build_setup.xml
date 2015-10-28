@@ -49,7 +49,7 @@
 			</or>
 			<then>
 		    	<if>
-		    		<available file="native2ascii${exec_suffix}" filepath="${env.Path}" />
+		    		<available file="native2ascii${exec_suffix}" filepath="${env.PATH}" />
 		    		<then>
 						<exec executable="native2ascii">
 							<arg line="-encoding UTF-8 config4user.properties config4ant.properties" />
