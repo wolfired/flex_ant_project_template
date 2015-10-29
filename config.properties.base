@@ -6,6 +6,9 @@ config.sdk.type=adobe
 #config.sdk.type=apache
 config.flex_config.file=${basedir}/flex_config_${config.sdk.type}.xml
 
+config.parallel=true
+config.maxthread=4
+
 config.locale=en_US
 config.player.version-major=12
 config.player.version-minor=0
@@ -17,8 +20,6 @@ config.accessible=false
 config.wmode=direct
 config.debug=false
 config.debug.password=123456
-config.parallel=true
-config.maxthread=4
 
 config.dir.bin=${basedir}/bin
 config.dir.ext=${basedir}/ext

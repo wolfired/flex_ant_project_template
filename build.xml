@@ -9,6 +9,7 @@
 	</description>
 
 	<import file="build_setup.xml" />
+	<import file="build_order.xml" />
 	<import file="build_gen.xml" />
 	<import file="build_ftp.xml" />
 
@@ -39,20 +40,22 @@
 		</asdoc>
 	</target>
 
-	<target name="select" description="Build the selected">
+	<target name="select"  depends="setup" description="Build the selected">
 		<input message="Please enter project name, delimit them with a comma:" addproperty="targets.name" defaultvalue="" />
-		<java jar="${basedir}/ext/util_order/main.jar" fork="true" failonerror="true">
+		<java jar="${basedir}/ext/util_order/main.jar" fork="true" outputproperty="build.order" failonerror="true">
 			<arg value="${basedir}"/>
 			<arg value="${targets.name}"/>
-			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
+			<!--<jvmarg value="-Dfile.encoding=${file.encoding}"/>-->
 		</java>
+		<foreach target="build_more" list="${build.order}" delimiter=";" param="targets.name" trim="true" parallel="false" inheritall="true" />
 	</target>
 
-	<target name="build" description="Build all">
-		<java jar="${basedir}/ext/util_order/main.jar" fork="true" failonerror="true">
+	<target name="build" depends="setup" description="Build all">
+		<java jar="${basedir}/ext/util_order/main.jar" fork="true" outputproperty="build.order" failonerror="true">
 			<arg value="${basedir}"/>
-			<jvmarg value="-Dfile.encoding=${file.encoding}"/>
+			<!--<jvmarg value="-Dfile.encoding=${file.encoding}"/>-->
 		</java>
+		<foreach target="build_more" list="${build.order}" delimiter=";" param="targets.name" trim="true" parallel="false" inheritall="true" />
 	</target>
 
 	<target name="deploy" depends="setup" description="Deploy all">

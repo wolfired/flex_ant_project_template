@@ -22,9 +22,11 @@
 			<isset property="is_windows_platform"/>
 			<then>
 				<property name="exec_suffix" value=".exe"/>
+				<property name="exec_path" value="${env.Path}"/>
 			</then>
 			<else>
 				<property name="exec_suffix" value=""/>
+				<property name="exec_path" value="${env.PATH}"/>
 			</else>
 		</if>		
 
@@ -49,11 +51,11 @@
 			</or>
 			<then>
 		    	<if>
-		    		<available file="native2ascii${exec_suffix}" filepath="${env.PATH}" />
+		    		<available file="native2ascii${exec_suffix}" filepath="${exec_path}" />
 		    		<then>
 						<exec executable="native2ascii">
 							<arg line="-encoding UTF-8 config4user.properties config4ant.properties" />
-						</exec>		    			
+						</exec>
 		    		</then>
 		    		<else>
 		    			<echo>

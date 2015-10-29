@@ -17,8 +17,8 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 public class UtilOrder {
-	private static final String FILE_ENCODING = "-Dfile.encoding=FILE_ENCODING";
-	private static final String TARGETS_NAME = "-Dtargets.name=\"TARGETS_NAME\"";
+//	private static final String FILE_ENCODING = "-Dfile.encoding=FILE_ENCODING";
+//	private static final String TARGETS_NAME = "-Dtargets.name=\"TARGETS_NAME\"";
 
 	private String _root_path;
 	private Set<String> _targets;
@@ -27,7 +27,7 @@ public class UtilOrder {
 	private List<Set<String>> _phases;
 	private Set<String> _dones;
 
-	private ProcessBuilder _pb;
+//	private ProcessBuilder _pb;
 
 	public UtilOrder(String root_path, String targets) {
 		_root_path = root_path;
@@ -42,22 +42,27 @@ public class UtilOrder {
 		_phases = new ArrayList<Set<String>>();
 		_dones = new HashSet<String>();
 
-		_pb = new ProcessBuilder();
-		_pb.directory(new File(_root_path));
-		_pb.redirectErrorStream(true);
-		_pb.environment().put("ANT_OPTS", FILE_ENCODING.replaceAll("FILE_ENCODING", System.getProperty("file.encoding")));
+//		_pb = new ProcessBuilder();
+//		_pb.directory(new File(_root_path));
+//		_pb.redirectErrorStream(true);
+//		_pb.environment().put("ANT_OPTS", FILE_ENCODING.replaceAll("FILE_ENCODING", System.getProperty("file.encoding")));
 	}
 
 	public int order() throws Exception {
 		this.calc_depend();
 		
+		
 		int exit_code = 0;
+		ArrayList<String> as = new ArrayList<String>();
 		if(this.solve_depend()){
 			Iterator<Set<String>> iter = _phases.iterator();
 			while(0 == exit_code && iter.hasNext()){
 //				System.out.println(StringUtils.join(iter.next().toArray(new String[0]), ","));
-				exit_code = this.exec(StringUtils.join(iter.next().toArray(new String[0]), ","));
+//				exit_code = this.exec(StringUtils.join(iter.next().toArray(new String[0]), ","));
+				as.add(StringUtils.join(iter.next().toArray(new String[0]), ","));
 			}
+			
+			System.out.println(StringUtils.join(as.toArray(new String[0]), ";"));
 		}
 		
 		return exit_code;
@@ -144,30 +149,30 @@ public class UtilOrder {
 		return true;
 	}
 	
-	private int exec(String targets_str) throws Exception {
-		_pb.command().clear();
-		_pb.command(this.ant(), "-f", "build_order.xml", "build_more", TARGETS_NAME.replaceAll("TARGETS_NAME", targets_str));
-		Process ps = _pb.start();
-		InputStream is = ps.getInputStream();
-		InputStreamReader isr = new InputStreamReader(is);
-		BufferedReader br = new BufferedReader(isr);
-		String line;
-		while (null != (line = br.readLine())) {
-			System.out.println(line);
-		}
-		br.close();
+//	private int exec(String targets_str) throws Exception {
+//		_pb.command().clear();
+//		_pb.command(this.ant(), "-f", "build_order.xml", "build_more", TARGETS_NAME.replaceAll("TARGETS_NAME", targets_str));
+//		Process ps = _pb.start();
+//		InputStream is = ps.getInputStream();
+//		InputStreamReader isr = new InputStreamReader(is);
+//		BufferedReader br = new BufferedReader(isr);
+//		String line;
+//		while (null != (line = br.readLine())) {
+//			System.out.println(line);
+//		}
+//		br.close();
+//
+//		return ps.exitValue();
+//	}
 
-		return ps.exitValue();
-	}
-
-	private String ant(){
-		String os_name = System.getProperty("os.name");
-		if(null == os_name || "".equals(os_name) || os_name.startsWith("Window") || os_name.startsWith("window")){
-			return "ant.bat";
-		}
-		
-		return "ant";
-	}
+//	private String ant(){
+//		String os_name = System.getProperty("os.name");
+//		if(null == os_name || "".equals(os_name) || os_name.startsWith("Window") || os_name.startsWith("window")){
+//			return "ant.bat";
+//		}
+//		
+//		return "ant";
+//	}
 
 	public static void main(String[] args) throws Exception {
 //		System.exit(new UtilOrder("E:/workspace_git/flex_ant_project_template", "").order());

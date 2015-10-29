@@ -2,7 +2,7 @@
 <project basedir=".">
 	<import file="build_setup.xml" />
 
-	<target name="build_more" depends="setup">
+	<target name="build_more">
 		<foreach target="build_one" list="${targets.name}" delimiter="," param="target.name" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
 	</target>
 
