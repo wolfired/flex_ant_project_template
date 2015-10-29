@@ -76,6 +76,8 @@ public class UtilOrder {
 
 		String result = cb.flip().toString();
 		cb.clear();
+		
+		result.replaceAll("\\s", "");
 		return result;
 	}
 
