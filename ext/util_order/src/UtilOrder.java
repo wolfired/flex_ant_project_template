@@ -104,7 +104,8 @@ public class UtilOrder {
 
 		depend_arr = this.readContent(dir.getAbsolutePath() + "/.dependlib").split(",");
 		for (String depend : depend_arr) {
-			if (null != depend && !"".equals(depend.trim())) {
+			depend = depend.trim();
+			if (null != depend && !"".equals(depend)) {
 				key_order.depends.add(depend);
 				
 				this.calc(new File(_root_path + "/src/" + depend));
@@ -113,7 +114,8 @@ public class UtilOrder {
 
 		depend_arr = this.readContent(dir.getAbsolutePath() + "/.dependrsl").split(",");
 		for (String depend : depend_arr) {
-			if (null != depend && !"".equals(depend.trim())) {
+			depend = depend.trim();
+			if (null != depend && !"".equals(depend)) {
 				key_order.depends.add(depend);
 				
 				this.calc(new File(_root_path + "/src/" + depend));
