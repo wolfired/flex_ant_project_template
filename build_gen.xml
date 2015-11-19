@@ -194,7 +194,7 @@
 
 		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
 			<arg value="${project.dir}"/>
-			<arg value="${config.swf_project.prefix}"/>
+			<arg value="${config.swc_project.prefix}"/>
 		</java>
 	</target>
 	
