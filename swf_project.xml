@@ -26,7 +26,7 @@
 	</target>
 
 	<target name="compile" depends="pre_custom,custom,pre_compile">
-		<mxmlc file="${dir.src}/${ant.project.name}.as" output="${dir.bin}/${ant.project.name}.swf" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="${config.incremental}" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="true" static-rsls="true" fork="true">
+		<mxmlc file="${dir.src}/${ant.project.name}.as" output="${dir.bin}/${ant.project.name}.swf" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="false" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="true" static-rsls="true" fork="true">
 			<load-config filename="${config.flex_config.file}" />
 
 			<source-path path-element="${dir.src}" />
