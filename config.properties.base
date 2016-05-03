@@ -35,6 +35,10 @@ config.dir.template=${config.dir.ext}/template
 config.is_use_svn=false
 config.ignore_setting4svn=${config.dir.template}/ignore_setting4svn
 
+config.dir.util=${config.dir.ext}/util
+config.util.order_jar=${config.dir.util}/order/main.jar
+config.util.setting_jar=${config.dir.util}/setting/main.jar
+
 config.swc_project.prefix=lib
 config.swf_project.prefix=
 

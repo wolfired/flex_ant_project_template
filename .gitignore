@@ -1,7 +1,9 @@
+/.vscode/
+
 /bin/*
 !/bin/.gitkeep
 
-/ext/util_*/dst/
+/ext/util/*/dst/
 /ext/swc_pkg/
 
 /log/*

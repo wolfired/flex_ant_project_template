@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<target name="rebuild_util">
+		<ant dir="${project.dir}" antfile="build.xml" target="package" inheritall="true"/>
+	</target>
+</project>

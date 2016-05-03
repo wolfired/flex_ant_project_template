@@ -2,20 +2,7 @@
 <project name="UtilSetting" basedir="." default="package">
 	<property name="dir.src" value="${basedir}/src" />
 	<property name="dir.dst" value="${basedir}/dst" />
+	<property name="dir.lib" value="${config.dir.util}/lib" />
 
-	<target name="init">
-		<mkdir dir="${dir.dst}" />
-	</target>
-
-	<target name="compile" depends="init">
-		<javac srcdir="${dir.src}" destdir="${dir.dst}" includeantruntime="false" />
-	</target>
-
-	<target name="package" depends="compile">
-		<jar destfile="${basedir}/main.jar" basedir="${dir.dst}" includes="**/*.class">
-			<manifest>
-				<attribute name="Main-Class" value="${ant.project.name}" />
-			</manifest>
-		</jar>
-	</target>
+	<import file="../util_project.xml" />
 </project>

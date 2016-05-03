@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="UtilOrder" basedir="." default="package">
+	<property name="dir.src" value="${basedir}/src" />
+	<property name="dir.dst" value="${basedir}/dst" />
+	<property name="dir.lib" value="${config.dir.util}/lib" />
+	
+	<target name="compile">
+		<mkdir dir="${dir.dst}"/>
+		<javac srcdir="${dir.src}" destdir="${dir.dst}" includeantruntime="false">
+			<classpath>
+				<fileset dir="${dir.lib}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="package" depends="clean,compile">
+		<pathconvert property="class_path" pathsep=" ">
+			<path>
+				<fileset dir="${dir.lib}">
+					<include name="**/*.jar" />
+				</fileset>
+			</path>
+			<mapper>
+				<chainedmapper>
+					<mapper type="flatten" />
+					<mapper type="glob" from="*.jar" to="../lib/*.jar"/>
+				</chainedmapper>
+			</mapper>
+		</pathconvert>
+		<jar destfile="${basedir}/main.jar" basedir="${dir.dst}" includes="**/*.class">
+			<manifest>
+				<attribute name="Class-Path" value="${class_path}" />
+				<attribute name="Main-Class" value="${ant.project.name}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${dir.dst}" deleteonexit="true" />
+	</target>
+</project>

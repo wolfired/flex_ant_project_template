@@ -12,6 +12,7 @@
 	<import file="build_order.xml" />
 	<import file="build_gen.xml" />
 	<import file="build_ftp.xml" />
+	<import file="build_util.xml" />
 
 	<target name="help" description="Show help message">
 	</target>
@@ -42,7 +43,7 @@
 
 	<target name="select"  depends="setup" description="Build the selected">
 		<input message="Please enter project name, delimit them with a comma:" addproperty="targets.name" defaultvalue="" />
-		<java jar="${basedir}/ext/util_order/main.jar" fork="true" outputproperty="build.order" failonerror="true">
+		<java jar="${config.util.order_jar}" fork="true" outputproperty="build.order" failonerror="true">
 			<arg value="${basedir}"/>
 			<arg value="${targets.name}"/>
 			<!--<jvmarg value="-Dfile.encoding=${file.encoding}"/>-->
@@ -51,7 +52,7 @@
 	</target>
 
 	<target name="build" depends="setup" description="Build all">
-		<java jar="${basedir}/ext/util_order/main.jar" fork="true" outputproperty="build.order" failonerror="true">
+		<java jar="${config.util.order_jar}" fork="true" outputproperty="build.order" failonerror="true">
 			<arg value="${basedir}"/>
 			<!--<jvmarg value="-Dfile.encoding=${file.encoding}"/>-->
 		</java>
@@ -237,4 +238,14 @@
 			</path>
 		</foreach>
 	</target>
+
+    <target name="util" depends="setup" description="Rebuild ext util">
+		<foreach target="rebuild_util" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
+			<path>
+				<dirset dir="${config.dir.util}">
+					<depth max="0" min="0" />
+				</dirset>
+			</path>
+		</foreach>    	
+    </target>
 </project>

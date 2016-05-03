@@ -164,7 +164,7 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
 
-		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
+		<java jar="${config.util.setting_jar}" fork="true">
 			<arg value="${project.dir}"/>
 			<arg value="${config.swc_project.prefix}"/>
 		</java>
@@ -192,7 +192,7 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
 
-		<java jar="${config.dir.ext}/util_setting/main.jar" fork="true">
+		<java jar="${config.util.setting_jar}" fork="true">
 			<arg value="${project.dir}"/>
 			<arg value="${config.swc_project.prefix}"/>
 		</java>
