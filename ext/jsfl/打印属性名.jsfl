@@ -1,4 +1,4 @@
-function main() {
+﻿function main() {
     fl.outputPanel.clear();
 
     var ls = fl.getDocumentDOM().getTimeline().layers;

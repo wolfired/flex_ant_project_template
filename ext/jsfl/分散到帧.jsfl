@@ -1,4 +1,4 @@
-function disperse(cf, i) {
+﻿function disperse(cf, i) {
 	var tl = document.getTimeline();
 
 	if(0 < cf) {
