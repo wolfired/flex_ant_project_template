@@ -11,7 +11,7 @@ function main() {
 function handleLayer(l) {
 	var fs = l.frames;
 
-	for (var i = 0; i fs.length; ++i) {
+	for (var i = 0; i < fs.length; ++i) {
 		handleFrame(fs[i]);
 	}
 }
@@ -103,7 +103,7 @@ function outputCode(e_name, e_type) {
 
 	debug_arr.push("Pass");
 
-	if(!debug) fl.trace("private function get " + e_name + "():" + e_type + "{ return uiSkin[\"" + e_name + "\"]; }"]);
+	if(!debug) fl.trace("private function get " + e_name + "():" + e_type + "{ return uiSkin[\"" + e_name + "\"]; }");
 }
 
 function traceDebug() {
