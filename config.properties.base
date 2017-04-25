@@ -28,12 +28,17 @@ config.dir.rsl=${basedir}/rsl
 config.dir.src=${basedir}/src
 config.dir.ref=${basedir}/ref
 config.dir.log=${basedir}/log
+config.dir.tmp=${basedir}/tmp
+config.dir.exp=${config.dir.tmp}/exp
 
 config.dir.playerglobal=${config.dir.ext}/playerglobal/${config.player.version}
 config.dir.template=${config.dir.ext}/template
 
-config.is_use_svn=false
-config.ignore_setting4svn=${config.dir.template}/ignore_setting4svn
+config.exp.is_use=false
+config.exp.dir=example
+
+config.svn.is_use=false
+config.svn.ignore_setting4svn=${config.dir.template}/ignore_setting4svn
 
 config.dir.util=${config.dir.ext}/util
 config.util.order_jar=${config.dir.util}/order/main.jar
@@ -44,7 +49,7 @@ config.swf_project.prefix=
 
 config.rsl.postfix=swf
 
-#config.log.level=debug|error|info|verbose|warn
+#Log level: debug|error|info|verbose|warn
 config.log.level=info
 config.verbose=true
 

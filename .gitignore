@@ -17,5 +17,7 @@
 !/src/*/.islibrary
 /src/*/bin/
 
+/tmp/
+
 /config4*.properties
 /flex_config_*.xml

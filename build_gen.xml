@@ -164,10 +164,25 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
 
-		<java jar="${config.util.setting_jar}" fork="true">
-			<arg value="${project.dir}"/>
-			<arg value="${config.swc_project.prefix}"/>
-		</java>
+		<if>
+			<and>
+				<equals arg1="${config.exp.is_use}" arg2="true"/>
+				<available file="${project.dir}/${config.exp.dir}" type="dir" />
+			</and>
+			<then>
+				<java jar="${config.util.setting_jar}" fork="true">
+					<arg value="${project.dir}" />
+					<arg value="${config.swc_project.prefix}" />
+					<arg value="${config.exp.dir}" />
+				</java>
+			</then>
+			<else>
+				<java jar="${config.util.setting_jar}" fork="true">
+					<arg value="${project.dir}" />
+					<arg value="${config.swc_project.prefix}" />
+				</java>
+			</else>
+		</if>
 	</target>
 
 	<target name="auto_gen_swf_project_setting">
@@ -192,16 +207,31 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
 
-		<java jar="${config.util.setting_jar}" fork="true">
-			<arg value="${project.dir}"/>
-			<arg value="${config.swc_project.prefix}"/>
-		</java>
+		<if>
+			<and>
+				<equals arg1="${config.exp.is_use}" arg2="true"/>
+				<available file="${project.dir}/${config.exp.dir}" type="dir" />
+			</and>
+			<then>
+				<java jar="${config.util.setting_jar}" fork="true">
+					<arg value="${project.dir}" />
+					<arg value="${config.swc_project.prefix}" />
+					<arg value="${config.exp.dir}" />
+				</java>
+			</then>
+			<else>
+				<java jar="${config.util.setting_jar}" fork="true">
+					<arg value="${project.dir}" />
+					<arg value="${config.swc_project.prefix}" />
+				</java>
+			</else>
+		</if>
 	</target>
 	
 	<target name="svn_check">
 		<if>
 			<and>
-				<equals arg1="${config.is_use_svn}" arg2="true"/>
+				<equals arg1="${config.config.svn.is_use}" arg2="true"/>
 				<not>
 					<available file="svn${exec_suffix}" filepath="${env.Path}" />
 				</not>
@@ -216,7 +246,7 @@ You have to add `svn${exec_suffix}` to the Path
 	
     <target name="svn_set_ignore_list">
 		<if>
-			<equals arg1="${config.is_use_svn}" arg2="true"/>
+			<equals arg1="${config.config.svn.is_use}" arg2="true"/>
 			<then>
 		    	<exec executable="svn">
 		    		<arg value="add"/>
@@ -227,7 +257,7 @@ You have to add `svn${exec_suffix}` to the Path
 		    		<arg value="ps"/>
 		    		<arg value="svn:ignore"/>
 		    		<arg value="-F"/>
-		    		<arg value="${config.ignore_setting4svn}"/>
+		    		<arg value="${config.svn.ignore_setting4svn}"/>
 		    		<arg value="${project.dir}"/>
 		    	</exec>
 			</then>

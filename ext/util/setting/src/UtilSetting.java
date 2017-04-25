@@ -8,13 +8,16 @@ import java.nio.CharBuffer;
 public class UtilSetting {
 	private static final String LIB_SRT = "<libraryPathEntry kind=\"3\" linkType=\"1\" path=\"/TARGET_NAME/bin/TARGET_NAME.swc\" useDefaultLinkType=\"false\"/>";
 	private static final String RSL_STR = "<libraryPathEntry kind=\"3\" linkType=\"2\" path=\"/TARGET_NAME/bin/TARGET_NAME.swc\" useDefaultLinkType=\"false\"/>";
+	private static final String EXP_DIR = "<compilerSourcePathEntry kind=\"1\" linkType=\"1\" path=\"DIR_NAME\"/>";
 	
 	private String _path;
 	private String _prefix;
+	private String _exp_dir;
 	
-	public UtilSetting(String path, String prefix) {
+	public UtilSetting(String path, String prefix, String exp_dir) {
 		_path = path;
 		_prefix = prefix;
+		_exp_dir = exp_dir;
 	}
 	
 	public void done() throws Exception{
@@ -39,9 +42,16 @@ public class UtilSetting {
 			}	
 		}
 		
-		String src_content = this.readContent(_path + "/.actionScriptProperties");
-		String dst_content = src_content.replaceAll("@@lib_rsl@@", buffer.flip().toString());
-		this.writeContent(_path + "/.actionScriptProperties", dst_content);
+		String r_content = this.readContent(_path + "/.actionScriptProperties");
+		r_content = r_content.replaceAll("@@lib_rsl@@", buffer.flip().toString());
+
+		if (null == _exp_dir || "".equals(_exp_dir)) {
+			r_content = r_content.replaceAll("@@exp_dir@@", "");
+		} else {
+			r_content = r_content.replaceAll("@@exp_dir@@", EXP_DIR.replaceAll("DIR_NAME", _exp_dir));
+		}
+		
+		this.writeContent(_path + "/.actionScriptProperties", r_content);
 		
 		buffer.clear();
 	}
@@ -65,6 +75,6 @@ public class UtilSetting {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new UtilSetting(args[0], args[1]).done();
+		new UtilSetting(args[0], args[1], 2 == args.length ? "" : args[2]).done();
 	}
 }

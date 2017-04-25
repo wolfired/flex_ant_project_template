@@ -55,7 +55,7 @@ root
 2. edit the **config.properties.base** and set:
 
    > ```
-   > config.is_use_svn=true
+   > config.svn.is_use=true
    > ```
 
 ## Good Luck!!
