@@ -100,10 +100,10 @@
 	</target>
 
 	<target name="copy_lib">
-		<copy file="${config.dir.src}/${depend.lib}/bin/${depend.lib}.swc" todir="${dot.lib}" />
+		<copy file="${config.dir.src}/${depend.lib}/bin/${config.compile.version}/${depend.lib}.swc" todir="${dot.lib}" />
 	</target>
 
 	<target name="copy_rsl">
-		<copy file="${config.dir.src}/${depend.rsl}/bin/${depend.rsl}.swc" todir="${dot.rsl}" />
+		<copy file="${config.dir.src}/${depend.rsl}/bin/${config.compile.version}/${depend.rsl}.swc" todir="${dot.rsl}" />
 	</target>
 </project>

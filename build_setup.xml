@@ -108,6 +108,20 @@ ${config.dir.playerglobal} do not exist!!
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${config.debug}" arg2="true" />
+			<then>
+				<property name="config.compile.version" value="debug" />
+			</then>
+			<else>
+				<property name="config.compile.version" value="release" />
+			</else>
+		</if>
+
+		<property name="config.dir.bin" value="${config.dir.bin.root}/${config.compile.version}" />
+		<property name="config.dir.lib" value="${config.dir.lib.root}/${config.compile.version}" />
+		<property name="config.dir.rsl" value="${config.dir.rsl.root}/${config.compile.version}" />
+
 		<record action="start" loglevel="${config.log.level}" append="no" name="${config.dir.log}/build.log" />
 	</target>
 </project>

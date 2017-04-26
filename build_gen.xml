@@ -161,8 +161,10 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib@@" value="${config.dir.lib}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl@@" value="${config.dir.rsl}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@local_lib@@" value="lib/${config.compile.version}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
 
 		<if>
 			<and>
@@ -204,8 +206,10 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@lib@@" value="${config.dir.lib}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@rsl@@" value="${config.dir.rsl}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib@@" value="${config.dir.lib}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl@@" value="${config.dir.rsl}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@local_lib@@" value="lib/${config.compile.version}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
 
 		<if>
 			<and>

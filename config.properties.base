@@ -21,10 +21,10 @@ config.wmode=direct
 config.debug=false
 config.debug.password=123456
 
-config.dir.bin=${basedir}/bin
+config.dir.bin.root=${basedir}/bin
 config.dir.ext=${basedir}/ext
-config.dir.lib=${basedir}/lib
-config.dir.rsl=${basedir}/rsl
+config.dir.lib.root=${basedir}/lib
+config.dir.rsl.root=${basedir}/rsl
 config.dir.src=${basedir}/src
 config.dir.ref=${basedir}/ref
 config.dir.log=${basedir}/log

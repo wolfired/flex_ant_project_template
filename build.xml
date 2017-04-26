@@ -232,9 +232,9 @@ Do not have any src
 	<target name="clean_src">
 		<delete includeemptydirs="true" verbose="true">
 			<fileset dir="${config.dir.src}">
-				<include name="**/bin/*" />
-				<include name="**/.lib/*" />
-				<include name="**/.rsl/*" />
+				<include name="**/bin/*/" />
+				<include name="**/.lib/*/" />
+				<include name="**/.rsl/*/" />
 			</fileset>
 		</delete>
 	</target>
