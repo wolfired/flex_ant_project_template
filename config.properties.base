@@ -2,9 +2,11 @@ FLEX_HOME=
 #FLEX_HOME=D:/Adobe/Adobe Flash Builder 4.7 (64 Bit)/sdks/4.6.0
 #FLEX_HOME=/path/to/flex_sdk
 
+config.root.dir=${basedir}
+
 config.sdk.type=adobe
 #config.sdk.type=apache
-config.flex_config.file=${basedir}/flex_config_${config.sdk.type}.xml
+config.flex_config.file=${config.root.dir}/flex_config_${config.sdk.type}.xml
 
 config.parallel=true
 config.maxthread=4
@@ -21,14 +23,14 @@ config.wmode=direct
 config.debug=false
 config.debug.password=123456
 
-config.dir.bin.root=${basedir}/bin
-config.dir.ext=${basedir}/ext
-config.dir.lib.root=${basedir}/lib
-config.dir.rsl.root=${basedir}/rsl
-config.dir.src=${basedir}/src
-config.dir.ref=${basedir}/ref
-config.dir.log=${basedir}/log
-config.dir.tmp=${basedir}/tmp
+config.dir.bin.root=${config.root.dir}/bin
+config.dir.ext=${config.root.dir}/ext
+config.dir.lib.root=${config.root.dir}/lib
+config.dir.rsl.root=${config.root.dir}/rsl
+config.dir.src=${config.root.dir}/src
+config.dir.ref=${config.root.dir}/ref
+config.dir.log=${config.root.dir}/log
+config.dir.tmp=${config.root.dir}/tmp
 config.dir.exp=${config.dir.tmp}/exp
 
 config.dir.playerglobal=${config.dir.ext}/playerglobal/${config.player.version}
@@ -36,6 +38,8 @@ config.dir.template=${config.dir.ext}/template
 
 config.exp.is_use=false
 config.exp.dir=example
+
+config.swc.is_embed_doc2swc=false
 
 config.svn.is_use=false
 config.svn.ignore_setting4svn=${config.dir.template}/ignore_setting4svn

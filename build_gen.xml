@@ -20,7 +20,9 @@
 						<exclude name="src/.*" />
 						<include name="bin" />
 						<include name="lib" />
+						<include name="lib/" />
 						<include name="rsl" />
+						<include name="rsl/" />
 						<include name=".lib" />
 						<include name=".rsl" />
 						<include name="src" />
@@ -84,7 +86,9 @@
 						<exclude name="src/.*" />
 						<include name="bin" />
 						<include name="lib" />
+						<include name="lib/" />
 						<include name="rsl" />
+						<include name="rsl/" />
 						<include name=".lib" />
 						<include name=".rsl" />
 						<include name="src" />

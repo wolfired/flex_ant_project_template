@@ -8,6 +8,9 @@
 	<property name="dot.lib" value="${basedir}/.lib/${config.compile.version}" />
 	<property name="dot.rsl" value="${basedir}/.rsl/${config.compile.version}" />
 
+	<property name="in.file" value="${dir.src}/${ant.project.name}.as" />
+	<property name="out.file" value="${dir.bin}/${ant.project.name}.swf" />
+
 	<target name="custom">
 		<!-- write custom code -->
 	</target>
