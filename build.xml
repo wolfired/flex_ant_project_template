@@ -204,7 +204,7 @@ Do not have any src
 
 	<target name="clean_bin">
 		<delete includeemptydirs="true" verbose="true">
-			<fileset dir="${config.dir.bin}">
+			<fileset dir="${config.dir.bin.root}">
 				<exclude name=".gitkeep" />
 				<include name="**/*" />
 			</fileset>
