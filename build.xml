@@ -152,8 +152,8 @@ Do not have any src
 		<if>
 			<and>
 				<available filepath="${config.dir.src}" file="${project.name}" type="dir" />
-				<available filepath="${config.dir.src}" file=".islibrary"/>
-				<available filepath="${config.dir.src}" file="${config.exp.dir}" type="dir" />
+				<available filepath="${config.dir.src}/${project.name}" file=".islibrary"/>
+				<available filepath="${config.dir.src}/${project.name}" file="${config.exp.dir}" type="dir" />
 			</and>
 			<then>
 				<copy todir="${config.dir.exp}" verbose="${config.verbose}">
