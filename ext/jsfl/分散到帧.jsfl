@@ -1,12 +1,15 @@
 ﻿function disperse(cf, i) {
 	var tl = document.getTimeline();
 
-	if(0 < cf) {
+	if (0 < cf) {
 		tl.insertBlankKeyframe(cf);
 	}
 
 	tl.currentFrame = cf;
-	document.addItem({x: 0, y: 0}, i);
+	document.addItem({
+		x: 0,
+		y: 0
+	}, i);
 }
 
 function main() {
@@ -16,15 +19,15 @@ function main() {
 
 	var arr = document.selection;
 
-	arr.sort(function(fst, snd) {
-		if(mode) {
-			if( fst.x > snd.x) {
+	arr.sort(function (fst, snd) {
+		if (mode) {
+			if (fst.x > snd.x) {
 				return 1;
 			}
 			return -1;
 		}
 
-		if( fst.y > snd.y) {
+		if (fst.y > snd.y) {
 			return 1;
 		}
 		return -1;
@@ -44,27 +47,27 @@ function align() {
 	var max_w = 0;
 	var max_h = 0;
 
-	foreach_frame(function() {
+	foreach_frame(function () {
 		document.selectAll();
 		arr = document.selection;
 
 		arr[0].x = 0;
 		arr[0].y = 0;
 
-		if(max_w < arr[0].width) {
+		if (max_w < arr[0].width) {
 			max_w = arr[0].width;
 		}
 
-		if(max_h < arr[0].height) {
+		if (max_h < arr[0].height) {
 			max_h = arr[0].height;
 		}
 	});
 
-	if(!need_align) {
+	if (!need_align) {
 		return;
 	}
 
-	foreach_frame(function() {
+	foreach_frame(function () {
 		document.selectAll();
 		arr = document.selection;
 
