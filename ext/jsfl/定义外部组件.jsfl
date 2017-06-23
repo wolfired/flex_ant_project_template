@@ -32,6 +32,7 @@ function handleMovieClip(item) {
 	var clz_name = item.name.replace(target_name_regex, "$1");
 
 	item.linkageExportForAS = true;
+	item.linkageExportInFirstFrame = true;
 	item.linkageClassName = pkg_path + clz_name;
 
 	if (1 < item.timeline.frameCount) {
@@ -45,6 +46,7 @@ function handleButton(item) {
 	var clz_name = item.name.replace(target_name_regex, "$1");
 
 	item.linkageExportForAS = true;
+	item.linkageExportInFirstFrame = true;
 	item.linkageClassName = pkg_path + clz_name;
 }
 
@@ -53,6 +55,7 @@ function handleBitmap(item) {
 	var clz_name = item.name.replace(target_name_regex, "$1");
 
 	item.linkageExportForAS = true;
+	item.linkageExportInFirstFrame = true;
 	item.linkageClassName = pkg_path + clz_name;
 }
 
