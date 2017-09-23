@@ -71,8 +71,8 @@ function align() {
 		document.selectAll();
 		arr = document.selection;
 
-		arr[0].x = Math.floor((max_w - arr.width) / 2);
-		arr[0].h = Math.floor((max_h - arr.height) / 2);
+		arr[0].x = Math.floor((max_w - arr[0].width) / 2);
+		arr[0].y = Math.floor((max_h - arr[0].height) / 2);
 	});
 }
 
