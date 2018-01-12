@@ -56,7 +56,7 @@ Do not have any src
 		</asdoc>
 	</target>
 
-	<target name="select"  depends="setup" description="Build the selected">
+	<target name="select"  depends="setup, util_check_all" description="Build the selected">
 		<input message="Please enter project name, delimit them with a comma:" addproperty="targets.name" defaultvalue="" />
 		<java jar="${config.util.order_jar}" fork="true" outputproperty="build.order" failonerror="true">
 			<arg value="${basedir}"/>
@@ -66,7 +66,7 @@ Do not have any src
 		<foreach target="build_more" list="${build.order}" delimiter=";" param="targets.name" trim="true" parallel="false" inheritall="true" />
 	</target>
 
-	<target name="build" depends="setup" description="Build all">
+	<target name="build" depends="setup, util_check_all" description="Build all">
 		<java jar="${config.util.order_jar}" fork="true" outputproperty="build.order" failonerror="true">
 			<arg value="${basedir}"/>
 			<!--<jvmarg value="-Dfile.encoding=${file.encoding}"/>-->
@@ -279,7 +279,7 @@ Do not have any src
 		<foreach target="auto_gen_swf_project" list="${swfs.name}" delimiter="," param="swf.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
-	<target name="setting" depends="setup, clean_setting" description="Gen all setting">
+	<target name="setting" depends="setup, clean_setting, util_check_all" description="Gen all setting">
 		<foreach target="auto_gen_setting" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
 			<path>
 				<dirset dir="${config.dir.src}">
@@ -290,7 +290,7 @@ Do not have any src
 	</target>
 
     <target name="util" depends="setup" description="Rebuild ext util">
-		<foreach target="rebuild_util" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
+		<foreach target="util_rebuild" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
 			<path>
 				<dirset dir="${config.dir.util}">
 					<depth max="0" min="0" />

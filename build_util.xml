@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-	<target name="rebuild_util">
+	<target name="util_check_all">
+		<foreach target="util_check_one" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
+			<path>
+				<dirset dir="${config.dir.util}">
+					<depth max="0" min="0" />
+				</dirset>
+			</path>
+		</foreach>   
+	</target>
+
+	<target name="util_check_one">
+		<if>
+			<and>
+				<available file="${project.dir}/build.xml" />
+				<not>
+					<available file="${project.dir}/main.jar" />
+				</not>
+			</and>
+			<then>
+				<antcall target="util_rebuild">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
+			</then>
+		</if>
+	</target>
+
+	<target name="util_rebuild">
 		<if>
 			<available file="${project.dir}/build.xml" />
 			<then>

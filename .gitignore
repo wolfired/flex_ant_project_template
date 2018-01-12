@@ -4,7 +4,7 @@
 !/bin/.gitkeep
 
 /ext/util/*/dst/
-/ext/swc_pkg/
+/ext/util/*/*.jar
 
 /log/*
 !/log/.gitkeep
