@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="@@project_name@@.as" projectUUID="d0f099e0-d276-4bac-9b6b-70f59334ded1" version="11">
-  <compiler additionalCompilerArguments="-locale en_US&#13;&#10;-swf-version @@swf_version@@&#13;&#10;-load-config @@flex_config@@" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="@@player_version@@.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="@@project_name@@.as" projectUUID="@@uuid@@" version="11">
+  <compiler additionalCompilerArguments="-locale en_US -swf-version @@swf_version@@ -load-config @@flex_config@@" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="@@player_version@@.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
     <compilerSourcePath>
       @@exp_dir@@
     </compilerSourcePath>

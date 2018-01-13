@@ -267,13 +267,13 @@ Do not have any src
 		</delete>
 	</target>
 
-	<target name="swc" depends="setup" description="New a swc project">
+	<target name="swc" depends="setup" description="New one or more swc project">
 		<input message="Please enter some library name, delimit them with a comma:" addproperty="swcs.name" />
 
 		<foreach target="auto_gen_swc_project" list="${swcs.name}" delimiter="," param="swc.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
-	<target name="swf" depends="setup" description="New a swf project">
+	<target name="swf" depends="setup" description="New one or more swf project">
 		<input message="Please enter some project name, delimit them with a comma:" addproperty="swfs.name" />
 
 		<foreach target="auto_gen_swf_project" list="${swfs.name}" delimiter="," param="swf.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />

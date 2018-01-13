@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.CharBuffer;
+import java.util.UUID;
 
 
 public class UtilSetting {
@@ -43,6 +44,9 @@ public class UtilSetting {
 		}
 		
 		String r_content = this.readContent(_path + "/.actionScriptProperties");
+
+		r_content = r_content.replaceAll("@@uuid@@", UUID.randomUUID().toString());
+
 		r_content = r_content.replaceAll("@@lib_rsl@@", buffer.flip().toString());
 
 		if (null == _exp_dir || "".equals(_exp_dir)) {
