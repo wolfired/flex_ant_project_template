@@ -25,7 +25,7 @@
 		</if>
 	</target>
 
-	<target name="compile" depends="pre_custom,custom,pre_compile">
+	<target name="compile4ant" depends="pre_custom,custom,pre_compile">
 		<compc output="${out.file}" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="${config.incremental}" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="${config.accessible}" fork="true">
 			<load-config filename="${config.flex_config.file}" />
 
@@ -44,7 +44,7 @@
 		</compc>
 	</target>
 
-	<target name="build" depends="compile">
+	<target name="build" depends="compile4ant">
 		<if>
 			<equals arg1="${config.swc.is_embed_doc2swc}" arg2="true" />
 			<then>

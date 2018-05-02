@@ -25,7 +25,7 @@
 		</if>
 	</target>
 
-	<target name="compile" depends="pre_custom,custom,pre_compile">
+	<target name="compile4ant" depends="pre_custom,custom,pre_compile">
 		<mxmlc file="${in.file}" output="${out.file}" debug="${config.debug}" debug-password="${config.debug.password}" optimize="${config.optimize}" incremental="false" locale="${config.locale}" target-player="${config.player.version}" swf-version="${config.swf.version}" accessible="true" static-rsls="true" fork="true">
 			<load-config filename="${config.flex_config.file}" />
 
@@ -44,7 +44,25 @@
 		</mxmlc>
 	</target>
 
-	<target name="build" depends="compile">
+	<target name="compile4java" depends="pre_custom,custom,pre_compile">
+		<java jar="${FLEX_HOME}/lib/mxmlc.jar" fork="true">
+			<arg value="+flexlib" />
+			<arg value="${FLEX_HOME}/frameworks" />
+			<arg line="-load-config ${config.flex_config.file}" />
+			<arg line="-compiler.debug -compiler.incremental" />
+			<arg line="-compiler.as3 -compiler.optimize -compiler.strict -target-player ${config.player.version} -swf-version ${config.swf.version} -static-rsls" />
+			<arg line="-compiler.external-library-path ${config.dir.playerglobal}" />
+			<arg line="-compiler.library-path ${dot.lib} -compiler.library-path ${dir.lib} -compiler.library-path ${config.dir.lib}" />
+			<arg line="-compiler.external-library-path ${dot.rsl} -compiler.external-library-path ${dir.rsl} -compiler.external-library-path ${config.dir.rsl}" />
+			<arg line="-output ${out.file}" />
+			<arg line="-compiler.source-path ${dir.src}" />
+			<arg line="-- ${in.file}" />
+
+			<jvmarg line="${jvmarg.mxmlc}" />
+		</java>
+	</target>
+
+	<target name="build" depends="compile4ant">
 	</target>
 
 	<target name="deploy">
