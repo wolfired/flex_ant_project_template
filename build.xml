@@ -3,7 +3,7 @@
 	 Mar 10, 2014 3:54:12 P
 	 LinkWu
 	 ====================================================================== -->
-<project default="help" basedir=".">
+<project default="menu" basedir=".">
 	<description>
 		Flex/AS3 project template
 	</description>
@@ -14,6 +14,12 @@
 	<import file="build_util.xml" />
 
 	<target name="help" description="Show help message">
+		<exec executable="cmd" osfamily="windows">
+		    <arg line="/c ant -p"/>
+		</exec>
+		<exec executable="bash" osfamily="unix">
+		     <arg value="-c ant -p"/>
+		</exec>
 	</target>
 
 	<target name="menu" description="Show menu">
