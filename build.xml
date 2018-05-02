@@ -11,7 +11,6 @@
 	<import file="build_setup.xml" />
 	<import file="build_order.xml" />
 	<import file="build_gen.xml" />
-	<import file="build_ftp.xml" />
 	<import file="build_util.xml" />
 
 	<target name="help" description="Show help message">
@@ -123,14 +122,6 @@ Do not have any src
 				<echo>${config.dir.src}/${real.path.name} is not exist!!</echo>
 			</else>
 		</if>
-	</target>
-
-	<target name="up" depends="setup" description="Upload the swc">
-		<antcall target="ftp_up" />
-	</target>
-
-	<target name="down" depends="setup" description="Download the swc">
-		<antcall target="ftp_down" />
 	</target>
 
 	<target name="wrap" depends="setup" description="Wrap all">
@@ -267,13 +258,13 @@ Do not have any src
 		</delete>
 	</target>
 
-	<target name="swc" depends="setup" description="New one or more swc project">
+	<target name="swc" depends="setup" description="Create one or more swc project">
 		<input message="Please enter some library name, delimit them with a comma:" addproperty="swcs.name" />
 
 		<foreach target="auto_gen_swc_project" list="${swcs.name}" delimiter="," param="swc.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
-	<target name="swf" depends="setup" description="New one or more swf project">
+	<target name="swf" depends="setup" description="Create one or more swf project">
 		<input message="Please enter some project name, delimit them with a comma:" addproperty="swfs.name" />
 
 		<foreach target="auto_gen_swf_project" list="${swfs.name}" delimiter="," param="swf.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
