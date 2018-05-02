@@ -17,8 +17,8 @@
 		<exec executable="cmd" osfamily="windows">
 		    <arg line="/c ant -p"/>
 		</exec>
-		<exec executable="bash" osfamily="unix">
-		     <arg value="-c ant -p"/>
+		<exec executable="sh" osfamily="unix">
+		     <arg line="-c ant -p"/>
 		</exec>
 	</target>
 
