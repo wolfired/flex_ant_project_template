@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<project name="Flex" basedir="." default="package">
+    <property name="dir.src" value="${basedir}/src" />
+    <property name="dir.dst" value="${basedir}/dst" />
+
+    <target name="compile">
+        <mkdir dir="${dir.dst}"/>
+        <javac srcdir="${dir.src}" destdir="${dir.dst}" includeantruntime="true"/>
+    </target>
+
+    <target name="package" depends="clean,compile">
+        <jar destfile="${basedir}/main.jar">
+            <fileset dir="${basedir}" includes="flexTasks.tasks" />
+            <fileset dir="${dir.dst}" includes="**/*.class"/>
+            <fileset dir="${basedir}" includes="templates/**" />
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${dir.dst}" deleteonexit="true" />
+    </target>
+</project>
