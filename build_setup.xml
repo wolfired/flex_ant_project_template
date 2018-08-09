@@ -9,9 +9,16 @@
 			</fileset>
 		</path>
 		<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="ant.contrib.classpath" />
-
+<!--
 		<path id="ant.flex.classpath">
 			<fileset dir="${basedir}/ext/ant_flex">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<taskdef resource="flexTasks.tasks" classpathref="ant.flex.classpath" />
+-->
+		<path id="ant.flex.classpath">
+			<fileset dir="${basedir}/ext/util/flex">
 				<include name="**/*.jar" />
 			</fileset>
 		</path>

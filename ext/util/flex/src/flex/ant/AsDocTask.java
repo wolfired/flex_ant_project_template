@@ -357,7 +357,9 @@ public final class AsDocTask extends FlexTask implements DynamicConfigurator
         // asdoc specific
         else if (dsSpec.matches(name)) // -doc-sources
         {
-            return createElem("path-element", dsSpec);
+            FlexFileSet fs = new FlexFileSet(dsSpec, true);
+            nestedFileSets.add(fs);
+            return fs;
         }
         else if (dnSpec.matches(name)) // -doc-namespaces
         {
