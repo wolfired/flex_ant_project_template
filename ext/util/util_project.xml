@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="package">
-	<property name="dir.src" value="${basedir}/src" />
-	<property name="dir.dst" value="${basedir}/dst" />
-	<property name="dir.lib" value="${config.dir.util}/lib" />
-	
+<project>
 	<target name="compile">
 		<mkdir dir="${dir.dst}"/>
 		<javac srcdir="${dir.src}" destdir="${dir.dst}" includeantruntime="false">
