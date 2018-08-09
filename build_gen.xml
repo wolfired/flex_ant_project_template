@@ -151,6 +151,11 @@
 
 		<copy todir="${project.dir}">
 			<fileset dir="${config.dir.template}/swc_project">
+				<include name=".lib/" />
+				<include name=".rsl/" />
+				<include name="bin/" />
+				<include name="lib/" />
+				<include name="rsl/" />
 				<include name=".settings/" />
 				<include name=".actionScriptProperties" />
 				<include name=".flexLibProperties" />
@@ -196,6 +201,11 @@
 
 		<copy todir="${project.dir}">
 			<fileset dir="${config.dir.template}/swf_project">
+				<include name=".lib/" />
+				<include name=".rsl/" />
+				<include name="bin/" />
+				<include name="lib/" />
+				<include name="rsl/" />
 				<include name=".settings/" />
 				<include name=".actionScriptProperties" />
 				<include name=".flexProperties" />
