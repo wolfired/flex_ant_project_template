@@ -51,7 +51,6 @@
 Can not find `python${exec_suffix}`
 [[Warning]]
 				</echo>
-				<copy file="config4user.properties" tofile="config4ant.properties" />	    			
 			</else>
 		</if>
 	</target>
