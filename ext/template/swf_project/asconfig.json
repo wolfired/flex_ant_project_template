@@ -6,7 +6,7 @@
             "src",
         ],
         "output": "bin/@@compile_version@@/@@project_name@@.swf",
-        "debug": true,
+        "debug": @@is_debug@@,
         "load-config": [],
         "swf-version": @@swf_version@@,
         "target-player": "@@player_version@@",

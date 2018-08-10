@@ -190,6 +190,7 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
 
 		<replace file="${project.dir}/asconfig.json" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
+		<replace file="${project.dir}/asconfig.json" token="@@is_debug@@" value="${config.debug}" />
 		<replace file="${project.dir}/asconfig.json" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/asconfig.json" token="@@compile_version@@" value="${config.compile.version}" />
 		<replace file="${project.dir}/asconfig.json" token="@@swf_version@@" value="${config.swf.version}" />
@@ -267,6 +268,7 @@
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
 
 		<replace file="${project.dir}/asconfig.json" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
+		<replace file="${project.dir}/asconfig.json" token="@@is_debug@@" value="${config.debug}" />
 		<replace file="${project.dir}/asconfig.json" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/asconfig.json" token="@@compile_version@@" value="${config.compile.version}" />
 		<replace file="${project.dir}/asconfig.json" token="@@swf_version@@" value="${config.swf.version}" />
