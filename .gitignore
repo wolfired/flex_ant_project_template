@@ -15,6 +15,7 @@
 /src/*/.*
 !/src/*/.depend*
 !/src/*/.islibrary
+/src/*/asconfig.json
 /src/*/lib/*/.gitkeep
 /src/*/rsl/*/.gitkeep
 /src/*/bin/
