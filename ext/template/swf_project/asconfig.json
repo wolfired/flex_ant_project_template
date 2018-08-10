@@ -4,6 +4,7 @@
     "compilerOptions": {
         "source-path": [
             "src",
+            @@external_src@@
         ],
         "output": "bin/@@compile_version@@/@@project_name@@.swf",
         "debug": @@is_debug@@,

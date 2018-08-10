@@ -4,6 +4,7 @@
     "compilerOptions": {
         "source-path": [
             "src",
+            @@external_src@@
         ],
         "include-sources": [
             "src",

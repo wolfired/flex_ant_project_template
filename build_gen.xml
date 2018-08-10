@@ -222,6 +222,9 @@
 				</java>
 			</else>
 		</if>
+		<java jar="${config.util.asconfig_jar}" fork="true">
+			<arg value="${project.dir}" />
+		</java>
 	</target>
 
 	<target name="auto_gen_swf_project_setting">
@@ -300,6 +303,9 @@
 				</java>
 			</else>
 		</if>
+		<java jar="${config.util.asconfig_jar}" fork="true">
+			<arg value="${project.dir}" />
+		</java>
 	</target>
 
 	<target name="svn_check">

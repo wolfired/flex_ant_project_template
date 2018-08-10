@@ -73,6 +73,9 @@ config.util.order_jar=${config.dir.util}/order/main.jar
 # 项目 FB 工程生成工具
 config.util.setting_jar=${config.dir.util}/setting/main.jar
 
+# 项目 vscode 工程生成工具
+config.util.asconfig_jar=${config.dir.util}/asconfig/main.jar
+
 # swf 编辑工具
 config.ext.swfchef_py=${config.dir.ext}/swfchef/add-opt-in.py
 
