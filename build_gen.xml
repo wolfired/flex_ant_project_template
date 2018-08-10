@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
 	<target name="auto_gen_swc_project">
-		<antcall target="svn_check"/>
-		
+		<antcall target="svn_check" />
+
 		<if>
 			<and>
 				<not>
@@ -49,7 +49,7 @@
 				<antcall target="auto_gen_swc_project_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
-				
+
 				<antcall target="svn_set_ignore_list">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
@@ -67,8 +67,8 @@
 	</target>
 
 	<target name="auto_gen_swf_project">
-		<antcall target="svn_check"/>
-		
+		<antcall target="svn_check" />
+
 		<if>
 			<and>
 				<not>
@@ -113,7 +113,7 @@
 				<antcall target="auto_gen_swf_project_setting">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
-				
+
 				<antcall target="svn_set_ignore_list">
 					<param name="project.dir" value="${project.dir}" />
 				</antcall>
@@ -132,7 +132,7 @@
 
 	<target name="auto_gen_setting">
 		<if>
-			<available file="${project.dir}/.islibrary"/>
+			<available file="${project.dir}/.islibrary" />
 			<then>
 				<antcall target="auto_gen_swc_project_setting">
 					<param name="project.dir" value="${project.dir}" />
@@ -151,37 +151,60 @@
 
 		<copy todir="${project.dir}">
 			<fileset dir="${config.dir.template}/swc_project">
-				<include name=".lib/" />
-				<include name=".rsl/" />
-				<include name="bin/" />
+				<include name="bin" />
+				<include name="lib" />
 				<include name="lib/" />
+				<include name="rsl" />
 				<include name="rsl/" />
+				<include name=".lib" />
+				<include name=".rsl" />
 				<include name=".settings/" />
 				<include name=".actionScriptProperties" />
 				<include name=".flexLibProperties" />
 				<include name=".project" />
+				<include name="asconfig.json" />
 			</fileset>
 		</copy>
+
+		<propertyregex property="config.flex_config.file/" input="${config.flex_config.file}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.playerglobal/" input="${config.dir.playerglobal}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.lib.root/" input="${config.dir.lib.root}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.lib/" input="${config.dir.lib}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.rsl.root/" input="${config.dir.rsl.root}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.rsl/" input="${config.dir.rsl}" regexp="\\" replace="/" global="true" />
 
 		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.swc_project.prefix}${project.name}" />
 
 		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${config.swc_project.prefix}${project.name}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib_root@@" value="${config.dir.lib.root}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib@@" value="${config.dir.lib}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl_root@@" value="${config.dir.rsl.root}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl@@" value="${config.dir.rsl}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib_root@@" value="${config.dir.lib.root/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib@@" value="${config.dir.lib/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl_root@@" value="${config.dir.rsl.root/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl@@" value="${config.dir.rsl/}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_lib_root@@" value="lib" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_lib@@" value="lib/${config.compile.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl_root@@" value="rsl" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
 
+		<replace file="${project.dir}/asconfig.json" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
+		<replace file="${project.dir}/asconfig.json" token="@@player_version@@" value="${config.player.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@compile_version@@" value="${config.compile.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@swf_version@@" value="${config.swf.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_lib_root@@" value="${config.dir.lib.root/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_lib@@" value="${config.dir.lib/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_rsl_root@@" value="${config.dir.rsl.root/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_rsl@@" value="${config.dir.rsl/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_lib_root@@" value="lib" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_lib@@" value="lib/${config.compile.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_rsl_root@@" value="rsl" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
+
 		<if>
 			<and>
-				<equals arg1="${config.exp.is_use}" arg2="true"/>
+				<equals arg1="${config.exp.is_use}" arg2="true" />
 				<available file="${project.dir}/${config.exp.dir}" type="dir" />
 			</and>
 			<then>
@@ -205,37 +228,60 @@
 
 		<copy todir="${project.dir}">
 			<fileset dir="${config.dir.template}/swf_project">
-				<include name=".lib/" />
-				<include name=".rsl/" />
-				<include name="bin/" />
+				<include name="bin" />
+				<include name="lib" />
 				<include name="lib/" />
+				<include name="rsl" />
 				<include name="rsl/" />
+				<include name=".lib" />
+				<include name=".rsl" />
 				<include name=".settings/" />
 				<include name=".actionScriptProperties" />
 				<include name=".flexProperties" />
 				<include name=".project" />
+				<include name="asconfig.json" />
 			</fileset>
 		</copy>
+
+		<propertyregex property="config.flex_config.file/" input="${config.flex_config.file}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.playerglobal/" input="${config.dir.playerglobal}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.lib.root/" input="${config.dir.lib.root}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.lib/" input="${config.dir.lib}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.rsl.root/" input="${config.dir.rsl.root}" regexp="\\" replace="/" global="true" />
+		<propertyregex property="config.dir.rsl/" input="${config.dir.rsl}" regexp="\\" replace="/" global="true" />
 
 		<replace file="${project.dir}/.project" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
 
 		<replace file="${project.dir}/.actionScriptProperties" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@player_version@@" value="${config.player.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@swf_version@@" value="${config.swf.version}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib_root@@" value="${config.dir.lib.root}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib@@" value="${config.dir.lib}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl_root@@" value="${config.dir.rsl.root}" />
-		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl@@" value="${config.dir.rsl}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@flex_config@@" value="${config.flex_config.file/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@playerglobal@@" value="${config.dir.playerglobal/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib_root@@" value="${config.dir.lib.root/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_lib@@" value="${config.dir.lib/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl_root@@" value="${config.dir.rsl.root/}" />
+		<replace file="${project.dir}/.actionScriptProperties" token="@@global_rsl@@" value="${config.dir.rsl/}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_lib_root@@" value="lib" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_lib@@" value="lib/${config.compile.version}" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl_root@@" value="rsl" />
 		<replace file="${project.dir}/.actionScriptProperties" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
 
+		<replace file="${project.dir}/asconfig.json" token="@@project_name@@" value="${config.swf_project.prefix}${project.name}" />
+		<replace file="${project.dir}/asconfig.json" token="@@player_version@@" value="${config.player.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@compile_version@@" value="${config.compile.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@swf_version@@" value="${config.swf.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_lib_root@@" value="${config.dir.lib.root/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_lib@@" value="${config.dir.lib/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_rsl_root@@" value="${config.dir.rsl.root/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@global_rsl@@" value="${config.dir.rsl/}" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_lib_root@@" value="lib" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_lib@@" value="lib/${config.compile.version}" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_rsl_root@@" value="rsl" />
+		<replace file="${project.dir}/asconfig.json" token="@@local_rsl@@" value="rsl/${config.compile.version}" />
+
 		<if>
 			<and>
-				<equals arg1="${config.exp.is_use}" arg2="true"/>
+				<equals arg1="${config.exp.is_use}" arg2="true" />
 				<available file="${project.dir}/${config.exp.dir}" type="dir" />
 			</and>
 			<then>
@@ -253,40 +299,40 @@
 			</else>
 		</if>
 	</target>
-	
+
 	<target name="svn_check">
 		<if>
 			<and>
-				<equals arg1="${config.config.svn.is_use}" arg2="true"/>
+				<equals arg1="${config.config.svn.is_use}" arg2="true" />
 				<not>
 					<available file="svn${exec_suffix}" filepath="${env.Path}" />
 				</not>
 			</and>
 			<then>
-    			<fail>
+				<fail>
 You have to add `svn${exec_suffix}` to the Path
         		</fail>
 			</then>
 		</if>
 	</target>
-	
-    <target name="svn_set_ignore_list">
+
+	<target name="svn_set_ignore_list">
 		<if>
-			<equals arg1="${config.config.svn.is_use}" arg2="true"/>
+			<equals arg1="${config.config.svn.is_use}" arg2="true" />
 			<then>
-		    	<exec executable="svn">
-		    		<arg value="add"/>
-		    		<arg value="-N"/>
-		    		<arg value="${project.dir}"/>
-		    	</exec>
-		    	<exec executable="svn">
-		    		<arg value="ps"/>
-		    		<arg value="svn:ignore"/>
-		    		<arg value="-F"/>
-		    		<arg value="${config.svn.ignore_setting4svn}"/>
-		    		<arg value="${project.dir}"/>
-		    	</exec>
+				<exec executable="svn">
+					<arg value="add" />
+					<arg value="-N" />
+					<arg value="${project.dir}" />
+				</exec>
+				<exec executable="svn">
+					<arg value="ps" />
+					<arg value="svn:ignore" />
+					<arg value="-F" />
+					<arg value="${config.svn.ignore_setting4svn}" />
+					<arg value="${project.dir}" />
+				</exec>
 			</then>
 		</if>
-    </target>
+	</target>
 </project>
