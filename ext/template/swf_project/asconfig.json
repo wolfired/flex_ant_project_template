@@ -17,12 +17,14 @@
             "@@global_lib@@",
             "@@local_lib_root@@",
             "@@local_lib@@",
+            ".lib/@@compile_version@@",
         ],
         "external-library-path": [
             "@@global_rsl_root@@",
             "@@global_rsl@@",
             "@@local_rsl_root@@",
             "@@local_rsl@@",
+            ".rsl/@@compile_version@@",
         ],
     },
     "files": [
