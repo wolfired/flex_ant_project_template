@@ -34,4 +34,25 @@
 			</then>
 		</if>
 	</target>
+
+	<target name="swfchef">
+		<if>
+			<available file="python${exec_suffix}" filepath="${exec_path}" />
+			<then>
+				<exec executable="python">
+					<arg line="${config.ext.swfchef_py}" />
+					<arg line="${swf.file}" />
+					<arg line="${config.telemetry} ${config.telemetry.password} ${config.importAssets}" />
+				</exec>
+			</then>
+			<else>
+				<echo>
+[[Warning]]
+Can not find `python${exec_suffix}`
+[[Warning]]
+				</echo>
+				<copy file="config4user.properties" tofile="config4ant.properties" />	    			
+			</else>
+		</if>
+	</target>
 </project>

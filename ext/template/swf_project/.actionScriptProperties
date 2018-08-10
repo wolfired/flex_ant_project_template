@@ -6,9 +6,13 @@
     </compilerSourcePath>
     <libraryPath defaultLinkType="3">
       <libraryPathEntry kind="1" linkType="2" path="@@playerglobal@@"/>
+      <libraryPathEntry kind="1" linkType="1" path="@@global_lib_root@@"/>
       <libraryPathEntry kind="1" linkType="1" path="@@global_lib@@"/>
+      <libraryPathEntry kind="1" linkType="1" path="@@local_lib_root@@"/>
       <libraryPathEntry kind="1" linkType="1" path="@@local_lib@@"/>
+      <libraryPathEntry kind="1" linkType="2" path="@@global_rsl_root@@"/>
       <libraryPathEntry kind="1" linkType="2" path="@@global_rsl@@"/>
+      <libraryPathEntry kind="1" linkType="2" path="@@local_rsl_root@@"/>
       <libraryPathEntry kind="1" linkType="2" path="@@local_rsl@@"/>
       @@lib_rsl@@
     </libraryPath>

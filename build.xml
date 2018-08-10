@@ -113,6 +113,9 @@ Do not have any src
 				</unzip>
 				<move file="${config.dir.bin}/library.swf" tofile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" verbose="${config.verbose}" />
 				<touch file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				<antcall target="swfchef">
+					<param name="swf.file" value="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				</antcall>
 			</then>
 		</if>
 	</target>
@@ -122,7 +125,7 @@ Do not have any src
 		<if>
 			<available filepath="${config.dir.src}" file="${real.path.name}" type="dir" />
 			<then>
-				<ant dir="${config.dir.src}/${real.path.name}" antfile="${real.path.name}.xml" target="deploy" output="${config.dir.log}/${real.path.name}_deploy.log" />
+				<ant dir="${config.dir.src}/${real.path.name}" antfile="${real.path.name}.xml" target="deploy" inheritall="true" output="${config.dir.log}/${real.path.name}_deploy.log" />
 			</then>
 			<else>
 				<echo>${config.dir.src}/${real.path.name} is not exist!!</echo>

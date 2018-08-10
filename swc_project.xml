@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
+	<import file="build_util.xml" />
+
 	<target name="pre_custom">
 		<mkdir dir="${dir.lib}"/>
 		<mkdir dir="${dir.rsl}"/>
@@ -97,6 +99,9 @@
 				</unzip>
 				<move file="${dir.bin}/library.swf" tofile="${dir.bin}/${ant.project.name}.${config.rsl.postfix}" verbose="${config.verbose}" />
 				<touch file="${dir.bin}/${ant.project.name}.${config.rsl.postfix}" />
+				<antcall target="swfchef">
+					<param name="swf.file" value="${dir.bin}/${ant.project.name}.${config.rsl.postfix}" />
+				</antcall>
 			</then>
 		</if>
 
@@ -129,6 +134,9 @@
 				</unzip>
 				<move file="${config.dir.bin}/library.swf" tofile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" verbose="${config.verbose}" />
 				<touch file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				<antcall target="swfchef">
+					<param name="swf.file" value="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				</antcall>
 			</then>
 		</if>
 	</target>

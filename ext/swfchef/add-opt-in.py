@@ -84,6 +84,9 @@ def consumeSwfTag(f):
 		tagLength = ((longlength[3]&0xff) << 24) | ((longlength[2]&0xff) << 16) | ((longlength[1]&0xff) << 8) | (longlength[0]&0xff)
 		tagBytes += ll
 	tagBytes += f.read(tagLength)
+
+	# print(tagType, tagBytes)
+
 	return (tagType, tagBytes)
 
 def outputInt(o, i):
@@ -123,12 +126,16 @@ if __name__ == "__main__":
 	####################################
 
 	if len(sys.argv) < 2:
-		print("Usage: %s SWF_FILE [PASSWORD]" % os.path.basename(inspect.getfile(inspect.currentframe())))
-		print("\nIf PASSWORD is provided, then a password will be required to view advanced telemetry in Adobe 'Monocle'.")
+		print("Usage: %s SWF_FILE [TELEMETRY] [PASSWORD] [IMPORTASSETSCLEAR]" % os.path.basename(inspect.getfile(inspect.currentframe())))
+		print("\nIf TELEMETRY is provided(0=off), script will insert Telemetry tag.")
+		print("\nIf PASSWORD is provided(0=off), then a password will be required to view advanced telemetry in Adobe 'Monocle'.")
+		print("\nIf IMPORTASSETSCLEAR is provided(0=off), script will delete ImportAssets and ImportAssets2 tag.")
 		sys.exit(-1)
 
 	infile = sys.argv[1]
-	passwordClear = sys.argv[2] if len(sys.argv) >= 3 else None
+	telemetry = True if len(sys.argv) >= 3 and sys.argv[2] != b'0' else False
+	passwordClear = sys.argv[3] if len(sys.argv) >= 4 and sys.argv[3] != b'0' else None
+	importAssetsClear = True if len(sys.argv) >= 5 and sys.argv[4] != b'0' else False
 
 	####################################
 	# Process SWF header
@@ -167,7 +174,7 @@ if __name__ == "__main__":
 	rs = f.read(1)
 	r = struct.unpack("B", rs)
 	rbits = (r[0] & 0xff) >> 3
-	rrbytes = (7 + (rbits*4) - 3) / 8;
+	rrbytes = (7 + (rbits*4) - 3) / 8
 	o.write(rs)
 	o.write(f.read((int)(rrbytes)))
 
@@ -177,10 +184,16 @@ if __name__ == "__main__":
 	# Process each SWF tag
 	####################################
 
+	had_telemetry = False
+
 	while True:
 		(tagType, tagBytes) = consumeSwfTag(f)
 		if tagType == 93:
-			raise Exception("Bad SWF: already has EnableTelemetry tag")
+			# raise Exception("Bad SWF: already has EnableTelemetry tag")
+			if telemetry or had_telemetry:
+				continue
+
+			had_telemetry = True
 		elif tagType == 92:
 			raise Exception("Bad SWF: Signed SWFs are not supported")
 		elif tagType == 69:
@@ -192,14 +205,23 @@ if __name__ == "__main__":
 			writeAfterNextTag = nextTagType == 77
 			if writeAfterNextTag:
 				o.write(nextTagBytes)
-				
-			outputTelemetryTag(o, passwordClear)
+
+			if telemetry:
+				had_telemetry = True
+				outputTelemetryTag(o, passwordClear)
 			
 			# If there was no Metadata tag, we still need to write that tag out
 			if not writeAfterNextTag:
 				o.write(nextTagBytes)
 				
 			(tagType, tagBytes) = consumeSwfTag(f)
+
+			if tagType == 93:
+				if telemetry or had_telemetry:
+					continue
+		if importAssetsClear and (tagType == 57 or tagType == 71):
+			print("Clear ImportAssets and ImportAssets2 at " + infile)
+			continue
 
 		o.write(tagBytes)
 		
@@ -230,11 +252,15 @@ if __name__ == "__main__":
 			outputInt(outFile, len(compressed)-5) # LZMA SWF has CompressedLength header field
 			outFile.write(compressed)
 		else:
-			assert(false)
+			assert(False)
 	
 	outFile.close()
 	
-	if passwordClear:
-		print("Added opt-in flag with encrypted password " + passwordClear)
-	else:
-		print("Added opt-in flag with no password")
+	if telemetry:
+		if passwordClear:
+			print("Added opt-in flag with encrypted password " + passwordClear)
+		else:
+			print("Added opt-in flag with no password")
+	
+	if importAssetsClear:
+		print("Delete ImportAssets and ImportAssets2 tag")

@@ -4,11 +4,15 @@ FLEX_HOME=
 
 config.root.dir=${basedir}
 
+# 使用 Adobe sdk
 config.sdk.type=adobe
+# 使用 Apache sdk
 #config.sdk.type=apache
 config.flex_config.file=${config.root.dir}/flex_config_${config.sdk.type}.xml
 
+# 是否并行编译
 config.parallel=true
+# 并行编译编译线程数
 config.maxthread=4
 
 config.locale=en_US
@@ -16,44 +20,78 @@ config.player.version-major=12
 config.player.version-minor=0
 config.player.version=${config.player.version-major}.${config.player.version-minor}
 config.swf.version=23
+# 是否编译优化
 config.optimize=true
+# 是否增量编译
 config.incremental=true
 config.accessible=false
 config.wmode=direct
+# 是否调试
 config.debug=false
 config.debug.password=123456
 
+# 项目输出目录
 config.dir.bin.root=${config.root.dir}/bin
+# 辅助工具目录
 config.dir.ext=${config.root.dir}/ext
+# 全局静态库目录
 config.dir.lib.root=${config.root.dir}/lib
+# 全局动态库目录
 config.dir.rsl.root=${config.root.dir}/rsl
+# 项目目录
 config.dir.src=${config.root.dir}/src
+# 文档目录
 config.dir.ref=${config.root.dir}/ref
+# 日志目录
 config.dir.log=${config.root.dir}/log
+# 临时目录
 config.dir.tmp=${config.root.dir}/tmp
+# 示例代码临时目录
 config.dir.exp=${config.dir.tmp}/exp
 
 config.dir.playerglobal=${config.dir.ext}/playerglobal/${config.player.version}
 config.dir.template=${config.dir.ext}/template
 
+# 是否把示例代码加入 FB 源码路径
 config.exp.is_use=false
+# 示例代码根目录
 config.exp.dir=example
 
+# 是否把文档嵌入到 swc
 config.swc.is_embed_doc2swc=false
 
+# 是否使用 svn
 config.svn.is_use=false
 config.svn.ignore_setting4svn=${config.dir.template}/ignore_setting4svn
 
+# 辅助工具目录
 config.dir.util=${config.dir.ext}/util
+
+# 项目依赖排序工具
 config.util.order_jar=${config.dir.util}/order/main.jar
+
+# 项目 FB 工程生成工具
 config.util.setting_jar=${config.dir.util}/setting/main.jar
 
+# swf 编辑工具
+config.ext.swfchef_py=${config.dir.ext}/swfchef/add-opt-in.py
+
+# 是否开启 telemetry: 0=off
+config.telemetry=0
+# telemetry 密码, 非0是密码: 0=off
+config.telemetry.password=0
+
+# 是否删除 swf 文件里的 ImportAssets 和 ImportAssets2 标签: 0=off
+config.importAssets=1
+
+# 项目 FB 工程名前缀
 config.swc_project.prefix=lib
 config.swf_project.prefix=
 
+# 输出的动态库文件名后缀
 config.rsl.postfix=swf
 
-#Log level: debug|error|info|verbose|warn
+# Log level: debug|error|info|verbose|warn
 config.log.level=info
 config.verbose=true
 
