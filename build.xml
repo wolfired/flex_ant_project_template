@@ -254,6 +254,7 @@ Do not have any src
 				<exclude name="**/.dependrsl" />
 				<include name="**/.*" />
 				<include name="**/.*/" />
+				<include name="**/asconfig.json" />
 			</fileset>
 		</delete>
 	</target>
