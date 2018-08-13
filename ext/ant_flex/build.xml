@@ -1,23 +1,32 @@
 <?xml version="1.0"?>
 
-<project name="Flex" basedir="." default="package">
-    <property name="dir.src" value="${basedir}/src" />
-    <property name="dir.dst" value="${basedir}/dst" />
+<project name="Flex Ant Tasks" default="main" basedir=".">
+
+    <target name="main" depends="clean, jar" />
 
     <target name="compile">
-        <mkdir dir="${dir.dst}"/>
-        <javac srcdir="${dir.src}" destdir="${dir.dst}" includeantruntime="true"/>
+        <mkdir dir="classes" />
+        <javac srcdir="src" destdir="classes" includeantruntime="true"/>
     </target>
 
-    <target name="package" depends="clean,compile">
-        <jar destfile="${basedir}/main.jar">
-            <fileset dir="${basedir}" includes="flexTasks.tasks" />
-            <fileset dir="${dir.dst}" includes="**/*.class"/>
-            <fileset dir="${basedir}" includes="templates/**" />
+    <target name="jar" depends="compile">
+        <jar destfile="flexTasks.jar">
+            <fileset dir="."
+                     includes="flexTasks.tasks" />
+            <fileset dir="classes"
+                     includes="**/*.class"/>
+            <fileset dir="."
+                     includes="templates/**" />
         </jar>
     </target>
 
     <target name="clean">
-        <delete dir="${dir.dst}" deleteonexit="true" />
+        <delete dir="classes" />
+		<delete file="lib/flexTasks.jar" />
+        <!-- Clean up VIM and Emacs backup files -->
+        <delete>
+            <fileset dir="src" includes="**/*~" defaultexcludes="false" />
+        </delete>
     </target>
+
 </project>
