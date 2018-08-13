@@ -290,8 +290,7 @@ Do not have any src
 		</foreach>
 	</target>
 
-    <target name="util" depends="setup" description="Rebuild ext util">
-		<antcall target="antflex" />
+    <target name="util" depends="antflex,setup" description="Rebuild ext util">
 		<foreach target="util_rebuild" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
 			<path>
 				<dirset dir="${config.dir.util}">
