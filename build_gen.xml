@@ -223,6 +223,7 @@
 			</else>
 		</if>
 		<java jar="${config.util.asconfig_jar}" fork="true">
+			<arg value="${config.dir.src}" />
 			<arg value="${project.dir}" />
 		</java>
 	</target>
@@ -304,6 +305,7 @@
 			</else>
 		</if>
 		<java jar="${config.util.asconfig_jar}" fork="true">
+			<arg value="${config.dir.src}" />
 			<arg value="${project.dir}" />
 		</java>
 	</target>

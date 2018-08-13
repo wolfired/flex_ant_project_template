@@ -6,6 +6,9 @@
 /ext/util/*/dst/
 /ext/util/*/*.jar
 
+/ext/ant_flex/dst/
+/ext/ant_flex/*.jar
+
 /log/*
 !/log/.gitkeep
 
