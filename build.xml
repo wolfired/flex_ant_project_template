@@ -252,6 +252,7 @@ Do not have any src
 				<exclude name="**/.islibrary" />
 				<exclude name="**/.dependlib" />
 				<exclude name="**/.dependrsl" />
+				<exclude name="**/.vscode/launch.json" />
 				<include name="**/.*" />
 				<include name="**/.*/" />
 				<include name="**/asconfig.json" />
