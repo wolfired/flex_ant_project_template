@@ -16,5 +16,5 @@
 }
 
 var fla_name_regex = /ui(\w+)\.fla/g;
-var sub_names = ["btn", "img", "mc", "output"];
+var sub_names = ["btn", "img", "mc", "output", "custom"];
 main();

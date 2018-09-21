@@ -61,6 +61,7 @@ public final class HtmlWrapperTask extends Task implements DynamicAttribute
     private String swf;
     private String title = "Flex Application";
     private String width = "400";
+    private String wmode = "window";
     private boolean history = false;
     private boolean expressInstall = false;
     private boolean versionDetection = true;
@@ -312,6 +313,10 @@ public final class HtmlWrapperTask extends Task implements DynamicAttribute
         {
         	versionDetection = Boolean.parseBoolean(value);
         }
+        else if (name.equals("wmode"))
+        {
+            wmode = value;
+        }
         else
         {
             throw new BuildException("The <html-wrapper> task doesn't support the \""
@@ -359,6 +364,11 @@ public final class HtmlWrapperTask extends Task implements DynamicAttribute
         this.width = width;
     }
 
+    public void setWmode(String wmode)
+    {
+        this.wmode = wmode;
+    }
+
     private String substitute(String input)
     {
         String result = input.replaceAll("\\$\\{application\\}", application);
@@ -371,6 +381,7 @@ public final class HtmlWrapperTask extends Task implements DynamicAttribute
         result = result.replaceAll("\\$\\{version_minor\\}", versionMinor);
         result = result.replaceAll("\\$\\{version_revision\\}", versionRevision);
         result = result.replaceAll("\\$\\{width\\}", width);
+        result = result.replaceAll("\\$\\{wmode\\}", wmode);
         result = result.replaceAll("\\$\\{useBrowserHistory\\}", useBrowserHistory);
         return result;
     }

@@ -87,7 +87,7 @@
 				<mkdir dir="${dir.bin}"/>
 			</then>
 		</if>
-		<html-wrapper output="${dir.bin}" file="${ant.project.name}.html" swf="${ant.project.name}" width="826" height="462" bgcolor="#F0F0F0" history="false" express-install="true" version-detection="false" version-major="${config.player.version-major}" version-minor="${config.player.version-minor}" wmode="${config.wmode}" version-revision="0" />
+		<html-wrapper output="${dir.bin}" file="${ant.project.name}.html" swf="${ant.project.name}" width="${config.width}" height="${config.height}" bgcolor="${config.bgcolor}" history="false" express-install="true" version-detection="false" version-major="${config.player.version-major}" version-minor="${config.player.version-minor}" wmode="${config.wmode}" version-revision="0" />
 	</target>
 
 	<target name="copy_lib">

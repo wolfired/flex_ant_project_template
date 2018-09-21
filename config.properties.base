@@ -29,6 +29,11 @@ config.wmode=direct
 # 是否调试
 config.debug=false
 config.debug.password=123456
+# 嵌入到页面的SWF大小, 像素值 或 百分比
+config.width=826
+config.height=462
+# 页面背景色
+config.bgcolor=#282923
 
 # 项目输出目录
 config.dir.bin.root=${config.root.dir}/bin

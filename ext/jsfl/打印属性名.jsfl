@@ -65,9 +65,9 @@ function handleInstance(e) {
 				switch (e.symbolType) {
 					case "movie clip":
 						{
-							var c_type = "MovieClip";
-							if ("flash.display.Sprite" == e.libraryItem.linkageBaseClass) {
-								c_type = "Sprite";
+							var c_type = "Sprite";
+							if (1 < e.libraryItem.timeline.frameCount) {
+								c_type = "MovieClip";
 							}
 							outputCode(e.name, c_type);
 							break;
