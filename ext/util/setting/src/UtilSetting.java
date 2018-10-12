@@ -79,6 +79,6 @@ public class UtilSetting {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new UtilSetting(args[0], args[1], 2 == args.length ? "" : args[2]).done();
+		new UtilSetting(args[0], 2 > args.length ? "" : args[1], 3 > args.length ? "" : args[2]).done();
 	}
 }
