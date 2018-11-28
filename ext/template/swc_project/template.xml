@@ -9,6 +9,7 @@
 	<property name="dir.exp" value="${basedir}/${config.exp.dir}" />
 	<property name="dir.doc" value="${config.dir.tmp}/embed_doc2swc_${ant.project.name}" />
 
+	<property name="dot.fix" value="${basedir}/.fix/${config.compile.version}" />
 	<property name="dot.lib" value="${basedir}/.lib/${config.compile.version}" />
 	<property name="dot.rsl" value="${basedir}/.rsl/${config.compile.version}" />
 

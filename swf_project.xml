@@ -5,11 +5,20 @@
 	<target name="pre_custom">
 		<mkdir dir="${dir.lib}"/>
 		<mkdir dir="${dir.rsl}"/>
+		<mkdir dir="${dot.fix}"/>
 		<mkdir dir="${dot.lib}"/>
 		<mkdir dir="${dot.rsl}"/>
 	</target>
 
 	<target name="pre_compile">
+		<loadfile property="fix.libs" srcfile="${basedir}/.fixlib" quiet="true" />
+		<if>
+			<isset property="fix.libs" />
+			<then>
+				<foreach target="copy_fix" list="${fix.libs}" delimiter="," param="fix.lib" trim="true" parallel="${config.parallel}" maxthreads="${config.maxthread}" inheritall="true" />
+			</then>
+		</if>
+
 		<loadfile property="depend.libs" srcfile="${basedir}/.dependlib" quiet="true" />
 		<if>
 			<isset property="depend.libs" />
@@ -46,6 +55,8 @@
 			<external-library-path dir="${config.dir.rsl.root}/" includes="*.swc" append="true" />
 			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
 
+			<include-libraries dir="${dot.fix}/" includes="**/*.swc" append="true" />
+
 			<jvmarg line="${jvmarg.mxmlc}" />
 		</mxmlc>
 	</target>
@@ -60,6 +71,7 @@
 			<arg line="-compiler.external-library-path ${config.dir.playerglobal}" />
 			<arg line="-compiler.library-path ${dot.lib} -compiler.library-path ${dir.lib.root} -compiler.library-path ${dir.lib} -compiler.library-path ${config.dir.lib.root} -compiler.library-path ${config.dir.lib}" />
 			<arg line="-compiler.external-library-path ${dot.rsl} -compiler.external-library-path ${dir.rsl.root} -compiler.external-library-path ${dir.rsl} -compiler.external-library-path ${config.dir.rsl.root} -compiler.external-library-path ${config.dir.rsl}" />
+			<arg line="-compiler.include-libraries ${dot.fix}" />
 			<arg line="-output ${out.file}" />
 			<arg line="-compiler.source-path ${dir.src}" />
 			<arg line="-- ${in.file}" />
@@ -105,6 +117,10 @@
 			</then>
 		</if>
 		<html-wrapper output="${dir.bin}" file="${ant.project.name}.html" swf="${ant.project.name}" width="${config.width}" height="${config.height}" bgcolor="${config.bgcolor}" history="false" express-install="true" version-detection="false" version-major="${config.player.version-major}" version-minor="${config.player.version-minor}" wmode="${config.wmode}" version-revision="0" />
+	</target>
+
+	<target name="copy_fix">
+		<copy file="${config.dir.src}/${fix.lib}/bin/${config.compile.version}/${fix.lib}.swc" todir="${dot.fix}" />
 	</target>
 
 	<target name="copy_lib">

@@ -233,6 +233,7 @@ Do not have any src
 		<delete includeemptydirs="true" verbose="true">
 			<fileset dir="${config.dir.src}">
 				<include name="**/bin/*/" />
+				<include name="**/.fix/*/" />
 				<include name="**/.lib/*/" />
 				<include name="**/.rsl/*/" />
 			</fileset>
@@ -247,6 +248,7 @@ Do not have any src
 		<delete includeemptydirs="true" verbose="true">
 			<fileset dir="${config.dir.src}">
 				<exclude name=".gitkeep" />
+				<exclude name="**/.fix/" />
 				<exclude name="**/.lib/" />
 				<exclude name="**/.rsl/" />
 				<exclude name="**/.islibrary" />

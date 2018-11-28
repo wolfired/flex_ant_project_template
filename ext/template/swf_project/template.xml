@@ -7,6 +7,7 @@
 	<property name="dir.rsl" value="${dir.rsl.root}/${config.compile.version}" />
 	<property name="dir.src" value="${basedir}/src" />
 
+	<property name="dot.fix" value="${basedir}/.fix/${config.compile.version}" />
 	<property name="dot.lib" value="${basedir}/.lib/${config.compile.version}" />
 	<property name="dot.rsl" value="${basedir}/.rsl/${config.compile.version}" />
 

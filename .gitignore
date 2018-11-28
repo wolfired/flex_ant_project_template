@@ -16,6 +16,7 @@
 !/ref/.gitkeep
 
 /src/*/.*
+!/src/*/.fix*
 !/src/*/.depend*
 !/src/*/.islibrary
 /src/*/asconfig.json

@@ -53,6 +53,7 @@
 						<include name="lib/" />
 						<include name="rsl" />
 						<include name="rsl/" />
+						<include name=".fix" />
 						<include name=".lib" />
 						<include name=".rsl" />
 						<include name="src" />
@@ -60,6 +61,7 @@
 						<include name=".islibrary" />
 						<include name=".dependlib" />
 						<include name=".dependrsl" />
+						<include name=".fixlib" />
 						<include name="template.xml" />
 					</fileset>
 				</copy>
@@ -120,12 +122,14 @@
 						<include name="lib/" />
 						<include name="rsl" />
 						<include name="rsl/" />
+						<include name=".fix" />
 						<include name=".lib" />
 						<include name=".rsl" />
 						<include name="src" />
 						<include name="src/" />
 						<include name=".dependlib" />
 						<include name=".dependrsl" />
+						<include name=".fixlib" />
 						<include name="template.xml" />
 					</fileset>
 				</copy>

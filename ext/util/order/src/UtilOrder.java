@@ -7,6 +7,7 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -102,7 +103,15 @@ public class UtilOrder {
 		
 		String[] depend_arr;
 
+		String[] fix_arr = this.readContent(dir.getAbsolutePath() + "/.fixlib").split(",");
+		Set<String> dset = new HashSet<String>();
+		Collections.addAll(dset, fix_arr);
+
 		depend_arr = this.readContent(dir.getAbsolutePath() + "/.dependlib").split(",");
+		Collections.addAll(dset, depend_arr);
+
+		depend_arr = dset.toArray(new String[0]);
+
 		for (String depend : depend_arr) {
 			depend = depend.trim();
 			if (null != depend && !"".equals(depend)) {
