@@ -35,11 +35,15 @@
 
 			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />	
 
-			<library-path dir="${dot.lib}" includes="**/*.swc" append="true" />
-			<library-path dir="${dir.lib}" includes="**/*.swc" append="true" />
-			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<library-path dir="${dot.lib}/" includes="**/*.swc" append="true" />
+			<library-path dir="${dir.lib.root}/" includes="*.swc" append="true" />
+			<library-path dir="${dir.lib}/" includes="**/*.swc" append="true" />
+			<library-path dir="${config.dir.lib.root}/" includes="*.swc" append="true" />
+			<library-path dir="${config.dir.lib}/" includes="**/*.swc" append="true" />
 			<external-library-path dir="${dot.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${dir.rsl.root}/" includes="*.swc" append="true" />
 			<external-library-path dir="${dir.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${config.dir.rsl.root}/" includes="*.swc" append="true" />
 			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
 
 			<jvmarg line="${jvmarg.mxmlc}" />
@@ -54,8 +58,8 @@
 			<arg line="-compiler.debug -compiler.incremental" />
 			<arg line="-compiler.as3 -compiler.optimize -compiler.strict -target-player ${config.player.version} -swf-version ${config.swf.version} -static-rsls" />
 			<arg line="-compiler.external-library-path ${config.dir.playerglobal}" />
-			<arg line="-compiler.library-path ${dot.lib} -compiler.library-path ${dir.lib} -compiler.library-path ${config.dir.lib}" />
-			<arg line="-compiler.external-library-path ${dot.rsl} -compiler.external-library-path ${dir.rsl} -compiler.external-library-path ${config.dir.rsl}" />
+			<arg line="-compiler.library-path ${dot.lib} -compiler.library-path ${dir.lib.root} -compiler.library-path ${dir.lib} -compiler.library-path ${config.dir.lib.root} -compiler.library-path ${config.dir.lib}" />
+			<arg line="-compiler.external-library-path ${dot.rsl} -compiler.external-library-path ${dir.rsl.root} -compiler.external-library-path ${dir.rsl} -compiler.external-library-path ${config.dir.rsl.root} -compiler.external-library-path ${config.dir.rsl}" />
 			<arg line="-output ${out.file}" />
 			<arg line="-compiler.source-path ${dir.src}" />
 			<arg line="-- ${in.file}" />
@@ -71,6 +75,19 @@
 		<antcall target="swfchef">
 			<param name="swf.file" value="${out.file}" />
 		</antcall>
+
+		<foreach param="file" target="deploy_rsl" parallel="false" inheritall="true">
+			<path>
+				<fileset dir="${dir.rsl.root}" includes="*.swc" />
+			</path>
+		</foreach>
+
+		<foreach param="file" target="deploy_rsl" parallel="false" inheritall="true">
+			<path>
+				<fileset dir="${dir.rsl}" includes="*.swc" />
+			</path>
+		</foreach>
+
 		<copy todir="${config.dir.bin}" verbose="${config.verbose}">
 			<fileset dir="${dir.bin}">
 				<exclude name="*.cache" />

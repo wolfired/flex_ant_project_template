@@ -281,6 +281,12 @@ Do not have any src
 		<foreach target="auto_gen_swf_project" list="${swfs.name}" delimiter="," param="swf.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
 	</target>
 
+	<target name="regen" depends="setup" description="Regen project config xml of all project">
+		<input message="Please enter some project name, delimit them with a comma:" addproperty="projects.name" />
+
+		<foreach target="regen_projects_xml" list="${projects.name}" delimiter="," param="project.name" trim="true" parallel="true" maxthreads="4" inheritall="true" />
+	</target>
+
 	<target name="setting" depends="setup, clean_setting, util_check_all" description="Gen all setting">
 		<foreach target="auto_gen_setting" param="project.dir" parallel="true" maxthreads="4" inheritall="true">
 			<path>

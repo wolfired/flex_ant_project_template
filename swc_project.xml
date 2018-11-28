@@ -35,11 +35,15 @@
 
 			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />
 
-			<library-path dir="${dot.lib}" includes="**/*.swc" append="true" />
-			<library-path dir="${dir.lib}" includes="**/*.swc" append="true" />
-			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<library-path dir="${dot.lib}/" includes="**/*.swc" append="true" />
+			<library-path dir="${dir.lib.root}/" includes="*.swc" append="true" />
+			<library-path dir="${dir.lib}/" includes="**/*.swc" append="true" />
+			<library-path dir="${config.dir.lib.root}/" includes="*.swc" append="true" />
+			<library-path dir="${config.dir.lib}/" includes="**/*.swc" append="true" />
 			<external-library-path dir="${dot.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${dir.rsl.root}/" includes="*.swc" append="true" />
 			<external-library-path dir="${dir.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${config.dir.rsl.root}/" includes="*.swc" append="true" />
 			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
 
 			<jvmarg line="${jvmarg.compc}" />
@@ -68,11 +72,15 @@
 
 			<external-library-path dir="${config.dir.playerglobal}" includes="**/*.swc" append="true" />
 
-			<library-path dir="${dot.lib}" includes="**/*.swc" append="true" />
-			<library-path dir="${dir.lib}" includes="**/*.swc" append="true" />
-			<library-path dir="${config.dir.lib}" includes="**/*.swc" append="true" />
+			<library-path dir="${dot.lib}/" includes="**/*.swc" append="true" />
+			<library-path dir="${dir.lib.root}/" includes="*.swc" append="true" />
+			<library-path dir="${dir.lib}/" includes="**/*.swc" append="true" />
+			<library-path dir="${config.dir.lib.root}/" includes="*.swc" append="true" />
+			<library-path dir="${config.dir.lib}/" includes="**/*.swc" append="true" />
 			<external-library-path dir="${dot.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${dir.rsl.root}/" includes="*.swc" append="true" />
 			<external-library-path dir="${dir.rsl}/" includes="**/*.swc" append="true" />
+			<external-library-path dir="${config.dir.rsl.root}/" includes="*.swc" append="true" />
 			<external-library-path dir="${config.dir.rsl}/" includes="**/*.swc" append="true" />
 
 			<jvmarg line="${jvmarg.asdoc}" />
@@ -107,6 +115,12 @@
 
 		<foreach param="file" target="deploy_rsl" parallel="false" inheritall="true">
 			<path>
+				<fileset dir="${dir.rsl.root}" includes="*.swc" />
+			</path>
+		</foreach>
+
+		<foreach param="file" target="deploy_rsl" parallel="false" inheritall="true">
+			<path>
 				<fileset dir="${dir.rsl}" includes="*.swc" />
 			</path>
 		</foreach>
@@ -114,31 +128,6 @@
 		<copy todir="${config.dir.bin}">
 			<fileset dir="${dir.bin}" includes="*.${config.rsl.postfix}" />
 		</copy>
-	</target>
-
-	<target name="deploy_rsl">
-		<basename file="${file}" property="real.file.name" suffix="swc" />
-
-		<if>
-			<or>
-				<not>
-					<available file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
-				</not>
-				<uptodate targetfile="${file}" srcfile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
-			</or>
-			<then>
-				<unzip src="${file}" dest="${config.dir.bin}">
-					<patternset>
-						<include name="**/*.swf" />
-					</patternset>
-				</unzip>
-				<move file="${config.dir.bin}/library.swf" tofile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" verbose="${config.verbose}" />
-				<touch file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
-				<antcall target="swfchef">
-					<param name="swf.file" value="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
-				</antcall>
-			</then>
-		</if>
 	</target>
 
 	<target name="copy_lib">

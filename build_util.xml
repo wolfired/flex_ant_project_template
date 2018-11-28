@@ -54,4 +54,29 @@ Can not find `python${exec_suffix}`
 			</else>
 		</if>
 	</target>
+
+	<target name="deploy_rsl">
+		<basename file="${file}" property="real.file.name" suffix="swc" />
+
+		<if>
+			<or>
+				<not>
+					<available file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				</not>
+				<uptodate targetfile="${file}" srcfile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+			</or>
+			<then>
+				<unzip src="${file}" dest="${config.dir.bin}">
+					<patternset>
+						<include name="**/*.swf" />
+					</patternset>
+				</unzip>
+				<move file="${config.dir.bin}/library.swf" tofile="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" verbose="${config.verbose}" />
+				<touch file="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				<antcall target="swfchef">
+					<param name="swf.file" value="${config.dir.bin}/${real.file.name}.${config.rsl.postfix}" />
+				</antcall>
+			</then>
+		</if>
+	</target>
 </project>

@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
+	<target name="regen_projects_xml">
+		<antcall target="gen_project_xml">
+			<param name="project.dir" value="${config.dir.src}/${project.name}" />
+		</antcall>
+	</target>
+
+	<target name="gen_project_xml">
+		<basename file="${project.dir}" property="project.name" />
+
+		<if>
+			<not>
+				<available file="${project.dir}/template.xml" />
+			</not>
+			<then>
+				<if>
+					<available file="${project.dir}/.islibrary" />
+					<then>
+						<copy file="${config.dir.template}/swc_project/template.xml" todir="${project.dir}" />
+					</then>
+					<else>
+						<copy file="${config.dir.template}/swf_project/template.xml" todir="${project.dir}" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<move file="${project.dir}/template.xml" tofile="${project.dir}/${project.name}.xml" />
+		<replace file="${project.dir}/${project.name}.xml" token="@@project_name@@" value="${project.name}" />
+	</target>
+
 	<target name="auto_gen_swc_project">
 		<antcall target="svn_check" />
 
@@ -34,8 +64,9 @@
 					</fileset>
 				</copy>
 
-				<move file="${project.dir}/template.xml" tofile="${project.dir}/${swc.name}.xml" />
-				<replace file="${project.dir}/${swc.name}.xml" token="@@project_name@@" value="${swc.name}" />
+				<antcall target="gen_project_xml">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
 
 				<move todir="${project.dir}/src/${swc.name}">
 					<fileset dir="${project.dir}/src">
@@ -98,8 +129,10 @@
 						<include name="template.xml" />
 					</fileset>
 				</copy>
-				<move file="${project.dir}/template.xml" tofile="${project.dir}/${swf.name}.xml" />
-				<replace file="${project.dir}/${swf.name}.xml" token="@@project_name@@" value="${swf.name}" />
+
+				<antcall target="gen_project_xml">
+					<param name="project.dir" value="${project.dir}" />
+				</antcall>
 
 				<move todir="${project.dir}/src/${swf.name}">
 					<fileset dir="${project.dir}/src">

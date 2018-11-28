@@ -63,7 +63,7 @@ config.exp.is_use=false
 config.exp.dir=example
 
 # 是否把文档嵌入到 swc
-config.swc.is_embed_doc2swc=false
+config.swc.is_embed_doc2swc=true
 
 # 是否使用 svn
 config.svn.is_use=false

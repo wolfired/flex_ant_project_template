@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="@@project_name@@" basedir=".">
 	<property name="dir.bin" value="${basedir}/bin/${config.compile.version}" />
-	<property name="dir.lib" value="${basedir}/lib/${config.compile.version}" />
-	<property name="dir.rsl" value="${basedir}/rsl/${config.compile.version}" />
+	<property name="dir.lib.root" value="${basedir}/lib" />
+	<property name="dir.lib" value="${dir.lib.root}/${config.compile.version}" />
+	<property name="dir.rsl.root" value="${basedir}/rsl" />
+	<property name="dir.rsl" value="${dir.rsl.root}/${config.compile.version}" />
 	<property name="dir.src" value="${basedir}/src" />
 	<property name="dir.exp" value="${basedir}/${config.exp.dir}" />
 	<property name="dir.doc" value="${config.dir.tmp}/embed_doc2swc_${ant.project.name}" />
