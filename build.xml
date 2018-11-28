@@ -252,6 +252,7 @@ Do not have any src
 				<exclude name="**/.lib/" />
 				<exclude name="**/.rsl/" />
 				<exclude name="**/.islibrary" />
+				<exclude name="**/.fixlib" />
 				<exclude name="**/.dependlib" />
 				<exclude name="**/.dependrsl" />
 				<exclude name="**/.vscode/launch.json" />
